@@ -4,6 +4,7 @@ import { categoryLabel, formatThaiDate } from "@/lib/format";
 import { NewsImage } from "@/components/NewsImage";
 import TradingViewForex from "@/components/TradingViewForex";
 import EconomicCalendar from "@/components/EconomicCalendar";
+import { LiveStream } from "@/components/LiveStream";
 
 export const revalidate = 60;
 
@@ -151,6 +152,26 @@ export default async function Home() {
       <section className="border-b border-line pb-10">
         <SectionHeader>ข่าวเด่น</SectionHeader>
         <Hero a={lead} />
+      </section>
+
+      {/* ถ่ายทอดสด */}
+      <section className="mt-10">
+        <div className="mb-5 flex items-center gap-3">
+          <span className="flex items-center gap-1.5 rounded bg-breaking px-2 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+            LIVE
+          </span>
+          <h2 className="font-display text-lg font-bold tracking-tight text-ink">
+            ถ่ายทอดสด
+          </h2>
+          <span className="h-px flex-1 bg-line" />
+        </div>
+        <div className="mx-auto max-w-3xl">
+          <LiveStream videoId="iEpJwprxDdk" />
+          <p className="mt-2 text-center text-xs text-ink-soft">
+            ติดตามความเคลื่อนไหวตลาดแบบเรียลไทม์
+          </p>
+        </div>
       </section>
 
       {/* MAIN: ข่าวล่าสุด + เรื่องเด่น */}

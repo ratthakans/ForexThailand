@@ -7,8 +7,8 @@
   --ink-soft: #6a6a70; /* gray — ข้อความรอง */
   --line: #e7e7e7;
   --surface: #f5f4f1;
-  --accent: #7d6414; /* ทองเข้ม (มืดลง) อ่านง่ายบนพื้นขาว */
-  --breaking: #c81e1e; /* แดง — danger ใน admin เท่านั้น */
+  --accent: #9a7918; /* ทอง richer (สว่างขึ้นนิด) อ่านง่ายบนพื้นขาว */
+  --breaking: #e02424; /* แดง — LIVE / danger */
 }
 
 @theme inline {
@@ -36,11 +36,11 @@ body {
 .bg-gold {
   background-image: linear-gradient(
     135deg,
-    #4f3a06 0%,
-    #7c5f10 24%,
-    #c39a39 52%,
-    #9c781b 74%,
-    #5f470a 100%
+    #6b4f0a 0%,
+    #a8801a 24%,
+    #e6c255 52%,
+    #c39a2f 74%,
+    #765709 100%
   );
 }
 
@@ -48,10 +48,10 @@ body {
 .text-gold-grad {
   background-image: linear-gradient(
     120deg,
-    #a07d1c 0%,
-    #d6b052 40%,
-    #b88f2b 64%,
-    #8a6912 100%
+    #b8902b 0%,
+    #ecca64 40%,
+    #cda23a 64%,
+    #9a7415 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
