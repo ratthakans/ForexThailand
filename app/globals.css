@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  /* Modern fintech palette: Navy + Orange */
+  /* 60/30/10 — ขาว(พื้น) / ดำ(หมึก) / ทอง(แอ็กเซนต์ gradient) */
   --bg: #ffffff;
-  --ink: #14213d; /* Oxford navy — หัวข้อ/มาสต์เฮด/ฟุตเตอร์ */
-  --ink-soft: #5c6478; /* navy-gray — ข้อความรอง */
-  --line: #e5e5e5; /* platinum — เส้น/พื้นอ่อน */
-  --surface: #e5e5e5;
-  --accent: #fca311; /* orange — chip/ลิงก์/ปุ่ม/ไฮไลต์ */
-  --breaking: #c81e1e; /* แดง — ใช้เฉพาะสถานะ danger ใน admin */
+  --ink: #0b0b0c; /* near-black — หัวข้อ/มาสต์เฮด/ฟุตเตอร์ (30%) */
+  --ink-soft: #6a6a70; /* gray — ข้อความรอง */
+  --line: #e7e7e7;
+  --surface: #f5f4f1;
+  --accent: #9a7b1f; /* ทองเข้มอ่านง่ายบนพื้นขาว (text/border) */
+  --breaking: #c81e1e; /* แดง — danger ใน admin เท่านั้น */
 }
 
 @theme inline {
@@ -30,6 +30,33 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* ทอง gradient โลหะวาว — ใช้กับพื้น chip/bar/ปุ่ม */
+.bg-gold {
+  background-image: linear-gradient(
+    135deg,
+    #7a5c12 0%,
+    #b8860b 22%,
+    #f0d57a 50%,
+    #d4af37 72%,
+    #8a6d1f 100%
+  );
+}
+
+/* ทอง gradient แบบตัวอักษร (clip) — ใช้กับ wordmark บนพื้นดำ */
+.text-gold-grad {
+  background-image: linear-gradient(
+    120deg,
+    #b8860b 0%,
+    #f3dd8c 38%,
+    #d4af37 62%,
+    #b8860b 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .text-balance {

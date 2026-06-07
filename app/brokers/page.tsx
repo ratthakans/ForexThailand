@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
 import { BROKERS, type Broker } from "@/lib/brokers";
+import { BrokerLogo } from "@/components/BrokerLogo";
 
 export const metadata: Metadata = {
-  title: "รีวิวโบรกเกอร์ Forex 50 อันดับ ปี 2025",
+  title: "รีวิวโบรกเกอร์ Forex 100 อันดับ ปี 2025",
   description:
-    "เปรียบเทียบและรีวิวโบรกเกอร์ Forex 50 อันดับ — เลเวอเรจ เงินฝากขั้นต่ำ การกำกับดูแล ข้อดี-ข้อเสีย คัดมาให้ครบในที่เดียว",
+    "เปรียบเทียบและรีวิวโบรกเกอร์ Forex 100 อันดับ — เลเวอเรจ เงินฝากขั้นต่ำ การกำกับดูแล ข้อดี-ข้อเสีย คัดมาให้ครบในที่เดียว",
   alternates: { canonical: "/brokers" },
   openGraph: {
     type: "website",
     url: "/brokers",
     siteName: "Forex Thailand",
     locale: "th_TH",
-    title: "รีวิวโบรกเกอร์ Forex 50 อันดับ ปี 2025 — Forex Thailand",
+    title: "รีวิวโบรกเกอร์ Forex 100 อันดับ ปี 2025 — Forex Thailand",
     description:
-      "เปรียบเทียบโบรกเกอร์ Forex 50 อันดับ เลเวอเรจ เงินฝากขั้นต่ำ การกำกับดูแล ข้อดี-ข้อเสีย",
+      "เปรียบเทียบโบรกเกอร์ Forex 100 อันดับ เลเวอเรจ เงินฝากขั้นต่ำ การกำกับดูแล ข้อดี-ข้อเสีย",
     images: [{ url: "/og-default", width: 1200, height: 630 }],
   },
   twitter: { card: "summary_large_image", images: ["/og-default"] },
@@ -23,14 +24,14 @@ function Stars({ rating }: { rating: number }) {
   return (
     <span className="text-sm leading-none tracking-wide" aria-label={`${rating}/5`}>
       <span className="text-accent">{"★".repeat(rating)}</span>
-      <span className="text-[#d4d4d4]">{"★".repeat(5 - rating)}</span>
+      <span className="text-[#d8d4c4]">{"★".repeat(5 - rating)}</span>
     </span>
   );
 }
 
 function Rank({ n }: { n: number }) {
   return (
-    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ink font-display text-sm font-bold text-white">
+    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ink font-display text-[13px] font-bold text-white">
       {n}
     </span>
   );
@@ -49,10 +50,11 @@ function Spec({ label, value }: { label: string; value: string }) {
 
 function FeatureCard({ b }: { b: Broker }) {
   return (
-    <article className="flex flex-col rounded-lg border border-line bg-white p-5">
+    <article className="flex flex-col rounded-xl border border-line bg-white p-5">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <Rank n={b.rank} />
+          <BrokerLogo domain={b.domain} name={b.name} size={44} />
           <div>
             <h3 className="font-display text-lg font-bold leading-tight text-ink">
               {b.name}
@@ -61,7 +63,7 @@ function FeatureCard({ b }: { b: Broker }) {
           </div>
         </div>
         {b.rank <= 3 && (
-          <span className="rounded bg-accent px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-ink">
+          <span className="bg-gold rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-black">
             แนะนำ
           </span>
         )}
@@ -76,24 +78,26 @@ function FeatureCard({ b }: { b: Broker }) {
         <Spec label="ประเภท" value={b.type} />
       </dl>
 
-      <div className="mt-4 grid gap-3 text-[13px] sm:grid-cols-2">
-        <ul className="space-y-1">
-          {b.pros.map((p) => (
-            <li key={p} className="flex gap-1.5 text-ink">
-              <span className="text-accent">✓</span>
-              <span>{p}</span>
-            </li>
-          ))}
-        </ul>
-        <ul className="space-y-1">
-          {b.cons.map((c) => (
-            <li key={c} className="flex gap-1.5 text-ink-soft">
-              <span>–</span>
-              <span>{c}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {(b.pros.length > 0 || b.cons.length > 0) && (
+        <div className="mt-4 grid gap-3 text-[13px] sm:grid-cols-2">
+          <ul className="space-y-1">
+            {b.pros.map((p) => (
+              <li key={p} className="flex gap-1.5 text-ink">
+                <span className="text-accent">✓</span>
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+          <ul className="space-y-1">
+            {b.cons.map((c) => (
+              <li key={c} className="flex gap-1.5 text-ink-soft">
+                <span>–</span>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </article>
   );
 }
@@ -102,6 +106,7 @@ function ListRow({ b }: { b: Broker }) {
   return (
     <article className="flex gap-4 border-b border-line py-4 last:border-b-0">
       <Rank n={b.rank} />
+      <BrokerLogo domain={b.domain} name={b.name} size={40} />
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           <h3 className="font-display text-base font-bold leading-tight text-ink">
@@ -128,6 +133,17 @@ function ListRow({ b }: { b: Broker }) {
   );
 }
 
+function SectionTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mb-5 flex items-center gap-3">
+      <span className="bg-gold h-4 w-1.5 rounded-full" aria-hidden />
+      <h2 className="font-display text-lg font-bold tracking-tight text-ink">
+        {children}
+      </h2>
+    </div>
+  );
+}
+
 export default function BrokersPage() {
   const top = BROKERS.slice(0, 10);
   const rest = BROKERS.slice(10);
@@ -140,10 +156,10 @@ export default function BrokersPage() {
           รีวิวโบรกเกอร์
         </span>
         <h1 className="mt-2 font-display text-2xl font-bold leading-tight tracking-tight text-ink sm:text-3xl">
-          รีวิวโบรกเกอร์ Forex 50 อันดับ
+          รีวิวโบรกเกอร์ Forex 100 อันดับ
         </h1>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-soft">
-          เปรียบเทียบโบรกเกอร์ฟอเร็กซ์ยอดนิยม คัดมา 50 อันดับ พร้อมเลเวอเรจ
+          เปรียบเทียบโบรกเกอร์ฟอเร็กซ์ยอดนิยม คัดมา 100 อันดับ พร้อมเลเวอเรจ
           เงินฝากขั้นต่ำ การกำกับดูแล และข้อดี-ข้อเสีย เพื่อช่วยให้เลือกได้ตรงกับสไตล์การเทรด
         </p>
         <p className="mt-3 text-[11px] uppercase tracking-wide text-ink-soft">
@@ -160,12 +176,7 @@ export default function BrokersPage() {
 
       {/* top 10 */}
       <section className="mt-10">
-        <div className="mb-5 flex items-center gap-3">
-          <span className="h-4 w-1.5 bg-accent" aria-hidden />
-          <h2 className="font-display text-lg font-bold tracking-tight text-ink">
-            10 อันดับแนะนำ
-          </h2>
-        </div>
+        <SectionTitle>10 อันดับแนะนำ</SectionTitle>
         <div className="grid gap-5 md:grid-cols-2">
           {top.map((b) => (
             <FeatureCard key={b.slug} b={b} />
@@ -173,15 +184,10 @@ export default function BrokersPage() {
         </div>
       </section>
 
-      {/* 11–50 */}
+      {/* 11–100 */}
       <section className="mt-12">
-        <div className="mb-5 flex items-center gap-3">
-          <span className="h-4 w-1.5 bg-accent" aria-hidden />
-          <h2 className="font-display text-lg font-bold tracking-tight text-ink">
-            โบรกเกอร์ทั้งหมด · อันดับ 11–50
-          </h2>
-        </div>
-        <div className="rounded-lg border border-line bg-white px-5">
+        <SectionTitle>โบรกเกอร์ทั้งหมด · อันดับ 11–100</SectionTitle>
+        <div className="rounded-xl border border-line bg-white px-5">
           {rest.map((b) => (
             <ListRow key={b.slug} b={b} />
           ))}

@@ -158,7 +158,7 @@ export default async function ArticlePage({ params }: PageProps) {
       )}
 
       {/* disclaimer — ต้องมีท้ายทุกหน้าบทความ */}
-      <aside className="mt-8 border-l-[3px] border-accent bg-accent/[0.05] px-4 py-3 text-[13px] leading-relaxed text-ink-soft">
+      <aside className="mt-8 border-l-[3px] border-accent bg-surface px-4 py-3 text-[13px] leading-relaxed text-ink-soft">
         บทความนี้เป็นข้อมูลทั่วไป ไม่ใช่คำแนะนำการลงทุน การเทรดมีความเสี่ยง
       </aside>
 

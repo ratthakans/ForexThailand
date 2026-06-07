@@ -42,7 +42,7 @@ function Wordmark({ light = false }: { light?: boolean }) {
   return (
     <span
       className={`font-display text-xl font-bold tracking-tight sm:text-2xl ${
-        light ? "text-white" : "text-ink"
+        light ? "text-gold-grad" : "text-ink"
       }`}
     >
       Forex Thailand

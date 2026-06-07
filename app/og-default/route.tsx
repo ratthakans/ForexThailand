@@ -15,7 +15,7 @@ export function GET() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "92px",
-          background: "#14213d",
+          background: "#0b0b0c",
           color: "#ffffff",
           fontFamily: "sans-serif",
         }}
@@ -23,20 +23,27 @@ export function GET() {
         <div
           style={{
             display: "flex",
-            width: 96,
+            width: 110,
             height: 8,
-            background: "#fca311",
+            background: "linear-gradient(90deg, #b8860b, #f0d57a, #d4af37)",
             marginBottom: 44,
           }}
         />
-        <span style={{ fontSize: 104, fontWeight: 700, letterSpacing: -2 }}>
+        <span
+          style={{
+            fontSize: 104,
+            fontWeight: 700,
+            letterSpacing: -2,
+            color: "#e8c766",
+          }}
+        >
           Forex Thailand
         </span>
         <span
           style={{
             marginTop: 26,
             fontSize: 36,
-            color: "#fca311",
+            color: "#cbb277",
             letterSpacing: 5,
           }}
         >

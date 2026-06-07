@@ -38,7 +38,7 @@ function Chip({ category }: { category: string }) {
 function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
     <div className="mb-5 flex items-center gap-3">
-      <span className="h-4 w-1.5 bg-accent" aria-hidden />
+      <span className="bg-gold h-4 w-1.5 rounded-full" aria-hidden />
       <h2 className="font-display text-lg font-bold tracking-tight text-ink">
         {children}
       </h2>

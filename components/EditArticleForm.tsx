@@ -184,7 +184,7 @@ export function EditArticleForm({ article }: { article: EditableArticle }) {
         <button
           type="submit"
           disabled={busy}
-          className="rounded bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+          className="bg-gold rounded px-5 py-2.5 text-sm font-semibold text-black transition-opacity hover:opacity-90 disabled:opacity-50"
         >
           {busy ? "กำลังบันทึก…" : "บันทึกการแก้ไข"}
         </button>
