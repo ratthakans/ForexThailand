@@ -3,7 +3,7 @@ import { query, type Article } from "@/lib/db";
 import { categoryLabel, formatThaiDate } from "@/lib/format";
 import { PROMOS, getBroker } from "@/lib/brokers";
 import { NewsImage } from "@/components/NewsImage";
-import { BrokerLogo } from "@/components/BrokerLogo";
+import { PromoCarousel, type PromoSlide } from "@/components/PromoCarousel";
 import TradingViewForex from "@/components/TradingViewForex";
 import EconomicCalendar from "@/components/EconomicCalendar";
 import { LiveStream } from "@/components/LiveStream";
@@ -96,22 +96,26 @@ function Hero({ a }: { a: Article }) {
 /** การ์ดในกริดข่าวล่าสุด */
 function Card({ a }: { a: Article }) {
   return (
-    <article>
-      <Link href={`/article/${a.id}`} className="group block">
+    <article className="group flex flex-col overflow-hidden rounded-xl border border-line bg-white transition-all hover:-translate-y-0.5 hover:border-ink/20 hover:shadow-md">
+      <Link href={`/article/${a.id}`} className="flex flex-1 flex-col">
         <NewsImage
           src={a.image_url}
           alt={a.title_th}
-          ratioClassName="aspect-[16/10]"
-          sizes="(max-width: 640px) 100vw, 360px"
-          className="mb-3"
+          ratioClassName="aspect-[16/9]"
+          sizes="(max-width: 640px) 100vw, 380px"
         />
-        <Chip category={a.category} />
-        <h3 className="mt-1.5 font-display text-base font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent">
-          {a.title_th}
-        </h3>
-        <time className="mt-2 block text-[11px] uppercase tracking-wide text-ink-soft">
-          {formatThaiDate(a.created_at)}
-        </time>
+        <div className="flex flex-1 flex-col p-4">
+          <Chip category={a.category} />
+          <h3 className="mt-1.5 font-display text-[17px] font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent">
+            {a.title_th}
+          </h3>
+          <p className="mt-1.5 line-clamp-2 flex-1 text-[13px] leading-relaxed text-ink-soft">
+            {a.hook?.trim() || a.body_th}
+          </p>
+          <time className="mt-3 block text-[11px] uppercase tracking-wide text-ink-soft">
+            {formatThaiDate(a.created_at)}
+          </time>
+        </div>
       </Link>
     </article>
   );
@@ -160,6 +164,21 @@ export default async function Home() {
 
   const latest = grid.length > 0 ? grid : ranked;
 
+  const promoSlides: PromoSlide[] = PROMOS.map((p) => {
+    const b = getBroker(p.brokerSlug);
+    return b
+      ? {
+          slug: b.slug,
+          name: b.name,
+          domain: b.domain,
+          rating: b.rating,
+          badge: p.badge,
+          title: p.title,
+          desc: p.desc,
+        }
+      : null;
+  }).filter((x): x is PromoSlide => x !== null);
+
   return (
     <>
       {/* ข่าวเด่น — พื้นขาว */}
@@ -183,12 +202,10 @@ export default async function Home() {
             </h2>
             <span className="h-px flex-1 bg-white/15" />
           </div>
-          <div className="mx-auto max-w-3xl">
-            <LiveStream videoId="iEpJwprxDdk" />
-            <p className="mt-2 text-center text-xs text-white/50">
-              ติดตามความเคลื่อนไหวตลาดแบบเรียลไทม์
-            </p>
-          </div>
+          <LiveStream videoId="iEpJwprxDdk" />
+          <p className="mt-3 text-center text-xs text-white/50">
+            ติดตามความเคลื่อนไหวตลาดแบบเรียลไทม์
+          </p>
         </div>
       </section>
 
@@ -230,51 +247,7 @@ export default async function Home() {
       <section className="bg-ink">
         <div className="mx-auto max-w-6xl px-5 py-10 md:py-12">
           <SectionHeader dark>โปรโมชันโบรกเกอร์แนะนำ</SectionHeader>
-          <p className="-mt-2 mb-6 text-sm text-white/55">
-            จุดเด่นและข้อเสนอจากโบรกเกอร์ที่เราคัดมาแนะนำ
-          </p>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {PROMOS.map((p) => {
-              const b = getBroker(p.brokerSlug);
-              if (!b) return null;
-              return (
-                <Link
-                  key={p.brokerSlug}
-                  href={`/brokers/${b.slug}`}
-                  className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition-all hover:border-accent hover:bg-white/[0.07]"
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <BrokerLogo domain={b.domain} name={b.name} size={44} />
-                      <div>
-                        <h3 className="font-display text-lg font-bold leading-tight text-white">
-                          {b.name}
-                        </h3>
-                        <span className="text-[12px] tracking-wide text-accent">
-                          {"★".repeat(b.rating)}
-                          <span className="text-white/20">
-                            {"★".repeat(5 - b.rating)}
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                    <span className="bg-gold rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-black">
-                      {p.badge}
-                    </span>
-                  </div>
-                  <p className="mt-5 font-display text-xl font-bold leading-snug text-white">
-                    {p.title}
-                  </p>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-white/55">
-                    {p.desc}
-                  </p>
-                  <span className="bg-gold mt-6 inline-flex w-fit items-center gap-1 rounded-lg px-4 py-2 text-sm font-bold text-black transition-transform group-hover:translate-x-0.5">
-                    ดูรีวิวโบรกเกอร์ →
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
+          <PromoCarousel slides={promoSlides} />
           <p className="mt-5 text-[11px] text-white/40">
             * โปรโมชันและเงื่อนไขอาจเปลี่ยนแปลง โปรดตรวจสอบล่าสุดที่เว็บไซต์โบรกเกอร์ ·
             การเทรดมีความเสี่ยง
