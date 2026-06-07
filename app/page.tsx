@@ -42,7 +42,7 @@ function Kicker({ category }: { category: string }) {
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div className="mb-6 flex items-center gap-3 border-b-2 border-ink pb-2">
-      <h2 className="font-display text-base font-bold uppercase tracking-wide text-ink">
+      <h2 className="font-serif text-base font-bold uppercase tracking-wide text-ink">
         {children}
       </h2>
     </div>
@@ -62,7 +62,7 @@ function Lead({ a }: { a: Article }) {
         className="mb-4"
       />
       <Kicker category={a.category} />
-      <h2 className="mt-2 font-display text-2xl font-bold leading-tight tracking-tight text-ink transition-colors group-hover:text-accent sm:text-[2rem] sm:leading-[1.12]">
+      <h2 className="mt-2 font-serif text-2xl font-bold leading-tight tracking-tight text-ink transition-colors group-hover:text-accent sm:text-[2rem] sm:leading-[1.12]">
         {a.title_th}
       </h2>
       <p className="mt-3 line-clamp-3 text-[15px] leading-relaxed text-ink-soft">
@@ -82,7 +82,7 @@ function SideStory({ a }: { a: Article }) {
       <Link href={`/article/${a.id}`} className="group flex items-start gap-3">
         <div className="min-w-0 flex-1">
           <Kicker category={a.category} />
-          <h3 className="mt-1 font-display text-base font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent">
+          <h3 className="mt-1 font-serif text-base font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent">
             {a.title_th}
           </h3>
           <time className="mt-1.5 block text-[11px] uppercase tracking-wide text-ink-soft">
@@ -114,7 +114,7 @@ function StoryCard({ a }: { a: Article }) {
           className="mb-3"
         />
         <Kicker category={a.category} />
-        <h3 className="mt-1.5 font-display text-lg font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent">
+        <h3 className="mt-1.5 font-serif text-lg font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent">
           {a.title_th}
         </h3>
         <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-ink-soft">
@@ -133,8 +133,8 @@ export default async function Home() {
 
   if (articles.length === 0) {
     return (
-      <div className="mx-auto max-w-6xl px-5 py-24 text-center">
-        <p className="font-display text-xl font-bold text-ink">
+      <div className="mx-auto max-w-5xl px-5 py-24 text-center">
+        <p className="font-serif text-xl font-bold text-ink">
           ยังไม่มีข่าวเผยแพร่ในขณะนี้
         </p>
         <p className="mt-2 text-sm text-ink-soft">
@@ -152,7 +152,7 @@ export default async function Home() {
   const rest = others.slice(4);
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-8 md:py-10">
+    <div className="mx-auto max-w-5xl px-5 py-8 md:py-10">
       {/* HERO: ข่าวนำ + เรื่องเด่น */}
       <section className="border-b border-line pb-10">
         <div className="grid gap-8 lg:grid-cols-3 lg:gap-10">
@@ -162,7 +162,7 @@ export default async function Home() {
 
           {side.length > 0 && (
             <aside className="lg:col-span-1 lg:border-l lg:border-line lg:pl-8">
-              <h2 className="mb-2 border-b-2 border-ink pb-2 font-display text-base font-bold uppercase tracking-wide text-ink">
+              <h2 className="mb-2 border-b-2 border-ink pb-2 font-serif text-base font-bold uppercase tracking-wide text-ink">
                 เรื่องเด่น
               </h2>
               <ul className="divide-y divide-line">

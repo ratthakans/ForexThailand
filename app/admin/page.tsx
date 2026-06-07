@@ -51,7 +51,7 @@ export default async function AdminPage() {
   return (
     <div className="mx-auto max-w-3xl px-5 py-8 md:py-10">
       <header className="mb-6 border-b border-line pb-5">
-        <h1 className="font-display text-2xl font-bold tracking-tight text-ink">
+        <h1 className="font-serif text-2xl font-bold tracking-tight text-ink">
           รีวิวข่าวก่อนเผยแพร่
         </h1>
         <p className="mt-1 text-sm text-ink-soft">

@@ -84,7 +84,7 @@ export default async function ArticlePage({ params }: PageProps) {
   const breaking = article.category === "breaking";
 
   return (
-    <article className="mx-auto max-w-3xl px-5 py-8 md:py-12">
+    <article className="mx-auto max-w-2xl px-5 py-8 md:py-12">
       {/* breadcrumb */}
       <nav className="mb-5 text-[11px] uppercase tracking-[0.14em] text-ink-soft">
         <Link href="/" className="hover:text-ink">
@@ -105,7 +105,7 @@ export default async function ArticlePage({ params }: PageProps) {
         >
           {categoryLabel(article.category)}
         </span>
-        <h1 className="mt-2 font-display text-3xl font-bold leading-tight tracking-tight text-ink sm:text-[2.4rem] sm:leading-[1.15]">
+        <h1 className="mt-2 font-serif text-3xl font-bold leading-tight tracking-tight text-ink sm:text-[2.4rem] sm:leading-[1.15]">
           {article.title_th}
         </h1>
         <time className="mt-4 block border-b border-line pb-5 text-xs uppercase tracking-wide text-ink-soft">
@@ -125,7 +125,7 @@ export default async function ArticlePage({ params }: PageProps) {
       />
 
       {/* เนื้อหา */}
-      <div className="mt-8 space-y-5 text-[17px] leading-[1.9] text-ink">
+      <div className="mt-8 space-y-5 text-[18px] leading-[1.95] text-ink">
         {paragraphs.map((p, i) => (
           <p key={i}>{p}</p>
         ))}
