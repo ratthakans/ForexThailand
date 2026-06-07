@@ -13,7 +13,8 @@ async function getArticles(): Promise<Article[]> {
   try {
     const { rows } = await query<Article>(
       `SELECT id, source_url, title_th, body_th, img_type, image_url,
-              image_credit, category, status, fb_post_id, created_at
+              image_credit, category, status, fb_post_id, created_at,
+              hook, author
          FROM articles
         WHERE status IN ('approved', 'posted')
           AND trim(coalesce(title_th, '')) <> ''
@@ -72,7 +73,7 @@ function Hero({ a }: { a: Article }) {
           {a.title_th}
         </h1>
         <p className="mt-3 line-clamp-3 text-[15px] leading-relaxed text-ink-soft">
-          {a.body_th}
+          {a.hook?.trim() || a.body_th}
         </p>
         <time className="mt-4 text-[11px] uppercase tracking-wide text-ink-soft">
           {formatThaiDate(a.created_at)}

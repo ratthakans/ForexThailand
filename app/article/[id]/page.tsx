@@ -29,7 +29,8 @@ const getArticle = cache(async (idRaw: string): Promise<Article | null> => {
   try {
     const { rows } = await query<Article>(
       `SELECT id, source_url, title_th, body_th, img_type, image_url,
-              image_credit, category, status, fb_post_id, created_at
+              image_credit, category, status, fb_post_id, created_at,
+              hook, author
          FROM articles
         WHERE id = $1
           AND status IN ('approved', 'posted')
@@ -54,29 +55,39 @@ export async function generateMetadata({
     return { title: "ไม่พบบทความ" };
   }
 
-  const description = truncate(article.body_th, 150);
+  // คำโปรย: ใช้ hook ก่อน ถ้าว่าง fallback เป็น body_th 150 ตัวแรก
+  const description = article.hook?.trim()
+    ? article.hook.trim()
+    : truncate(article.body_th, 150);
+
+  // ภาพ: ใช้ image_url (Pexels absolute) ถ้าไม่มีให้ fallback ภาพแบรนด์ default
+  // (ทั้งคู่จะกลายเป็น absolute URL ผ่าน metadataBase → www.forexthailand.co)
+  const ogImage = article.image_url
+    ? { url: article.image_url, alt: article.title_th }
+    : { url: "/og-default", width: 1200, height: 630, alt: article.title_th };
+
+  const path = `/article/${article.id}`;
 
   return {
     title: article.title_th,
     description,
-    alternates: {
-      canonical: `/article/${article.id}`,
-    },
+    authors: article.author ? [{ name: article.author }] : undefined,
+    alternates: { canonical: path },
     openGraph: {
+      type: "article",
+      url: path,
+      siteName: "Forex Thailand",
+      locale: "th_TH",
       title: article.title_th,
       description,
-      type: "article",
-      url: `/article/${article.id}`,
       publishedTime: article.created_at.toISOString(),
-      ...(article.image_url
-        ? { images: [{ url: article.image_url, alt: article.title_th }] }
-        : {}),
+      images: [ogImage],
     },
     twitter: {
       card: "summary_large_image",
       title: article.title_th,
       description,
-      ...(article.image_url ? { images: [article.image_url] } : {}),
+      images: [ogImage.url],
     },
   };
 }

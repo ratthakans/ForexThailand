@@ -40,8 +40,12 @@ export type Article = {
   img_type: string | null;
   image_url: string | null;
   image_credit: string | null;
-  category: "breaking" | "image" | "general" | string;
+  category: "breaking" | "image" | "general" | "news_update" | string;
   status: "pending_review" | "approved" | "posted" | "rejected" | string;
   fb_post_id: string | null;
   created_at: Date;
+  /** คำโปรย 1 ประโยค — ใช้เป็น og:description (อาจ null) */
+  hook: string | null;
+  /** ผู้เขียน (อาจ null) */
+  author: string | null;
 };
