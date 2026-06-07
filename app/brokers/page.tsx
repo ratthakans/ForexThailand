@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { BROKERS, type Broker } from "@/lib/brokers";
 import { BrokerLogo } from "@/components/BrokerLogo";
 
 export const metadata: Metadata = {
-  title: "รีวิวโบรกเกอร์ Forex 100 อันดับ ปี 2025",
+  title: "รีวิวโบรกเกอร์ Forex 50 อันดับ ปี 2025",
   description:
-    "เปรียบเทียบและรีวิวโบรกเกอร์ Forex 100 อันดับ — เลเวอเรจ เงินฝากขั้นต่ำ การกำกับดูแล ข้อดี-ข้อเสีย คัดมาให้ครบในที่เดียว",
+    "เปรียบเทียบและรีวิวโบรกเกอร์ Forex 50 อันดับ — เลเวอเรจ เงินฝากขั้นต่ำ การกำกับดูแล คะแนนรีวิว ข้อดี-ข้อเสีย ครบในที่เดียว",
   alternates: { canonical: "/brokers" },
   openGraph: {
     type: "website",
     url: "/brokers",
     siteName: "Forex Thailand",
     locale: "th_TH",
-    title: "รีวิวโบรกเกอร์ Forex 100 อันดับ ปี 2025 — Forex Thailand",
+    title: "รีวิวโบรกเกอร์ Forex 50 อันดับ ปี 2025 — Forex Thailand",
     description:
-      "เปรียบเทียบโบรกเกอร์ Forex 100 อันดับ เลเวอเรจ เงินฝากขั้นต่ำ การกำกับดูแล ข้อดี-ข้อเสีย",
+      "เปรียบเทียบโบรกเกอร์ Forex 50 อันดับ เลเวอเรจ เงินฝากขั้นต่ำ การกำกับดูแล ข้อดี-ข้อเสีย",
     images: [{ url: "/og-default", width: 1200, height: 630 }],
   },
   twitter: { card: "summary_large_image", images: ["/og-default"] },
@@ -50,13 +51,16 @@ function Spec({ label, value }: { label: string; value: string }) {
 
 function FeatureCard({ b }: { b: Broker }) {
   return (
-    <article className="flex flex-col rounded-xl border border-line bg-white p-5">
+    <Link
+      href={`/brokers/${b.slug}`}
+      className="group flex flex-col rounded-xl border border-line bg-white p-5 transition-colors hover:border-accent"
+    >
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <Rank n={b.rank} />
           <BrokerLogo domain={b.domain} name={b.name} size={44} />
           <div>
-            <h3 className="font-display text-lg font-bold leading-tight text-ink">
+            <h3 className="font-display text-lg font-bold leading-tight text-ink group-hover:text-accent">
               {b.name}
             </h3>
             <Stars rating={b.rating} />
@@ -98,26 +102,33 @@ function FeatureCard({ b }: { b: Broker }) {
           </ul>
         </div>
       )}
-    </article>
+
+      <span className="mt-4 text-xs font-semibold text-accent">
+        อ่านรีวิวเต็ม →
+      </span>
+    </Link>
   );
 }
 
 function ListRow({ b }: { b: Broker }) {
   return (
-    <article className="flex gap-4 border-b border-line py-4 last:border-b-0">
+    <Link
+      href={`/brokers/${b.slug}`}
+      className="group flex items-center gap-4 border-b border-line py-4 last:border-b-0"
+    >
       <Rank n={b.rank} />
       <BrokerLogo domain={b.domain} name={b.name} size={40} />
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <h3 className="font-display text-base font-bold leading-tight text-ink">
+          <h3 className="font-display text-base font-bold leading-tight text-ink group-hover:text-accent">
             {b.name}
           </h3>
           <Stars rating={b.rating} />
         </div>
-        <p className="mt-1 text-[13px] leading-relaxed text-ink-soft">
+        <p className="mt-1 line-clamp-1 text-[13px] leading-relaxed text-ink-soft">
           {b.highlight}
         </p>
-        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-ink-soft">
+        <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-ink-soft">
           <span>
             เลเวอเรจ <strong className="text-ink">{b.leverage}</strong>
           </span>
@@ -129,7 +140,10 @@ function ListRow({ b }: { b: Broker }) {
           </span>
         </div>
       </div>
-    </article>
+      <span className="hidden shrink-0 text-ink-soft transition-colors group-hover:text-accent sm:block">
+        →
+      </span>
+    </Link>
   );
 }
 
@@ -150,31 +164,28 @@ export default function BrokersPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-8 md:py-10">
-      {/* header */}
       <header className="border-b-2 border-ink pb-6">
         <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-accent">
           รีวิวโบรกเกอร์
         </span>
         <h1 className="mt-2 font-display text-2xl font-bold leading-tight tracking-tight text-ink sm:text-3xl">
-          รีวิวโบรกเกอร์ Forex 100 อันดับ
+          รีวิวโบรกเกอร์ Forex 50 อันดับ
         </h1>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-soft">
-          เปรียบเทียบโบรกเกอร์ฟอเร็กซ์ยอดนิยม คัดมา 100 อันดับ พร้อมเลเวอเรจ
-          เงินฝากขั้นต่ำ การกำกับดูแล และข้อดี-ข้อเสีย เพื่อช่วยให้เลือกได้ตรงกับสไตล์การเทรด
+          เปรียบเทียบโบรกเกอร์ฟอเร็กซ์ยอดนิยม คัดมา 50 อันดับ พร้อมเลเวอเรจ
+          เงินฝากขั้นต่ำ การกำกับดูแล และคะแนนรีวิว — คลิกเพื่อดูรายละเอียดราย โบรกเกอร์
         </p>
         <p className="mt-3 text-[11px] uppercase tracking-wide text-ink-soft">
           อัปเดตล่าสุด · มิถุนายน 2569
         </p>
       </header>
 
-      {/* disclaimer */}
       <aside className="mt-6 rounded-lg border-l-4 border-accent bg-surface px-4 py-3 text-[13px] leading-relaxed text-ink">
         <strong>โปรดอ่าน:</strong> ข้อมูลเป็นการรวบรวมเพื่อเปรียบเทียบเบื้องต้น
         อาจมีการเปลี่ยนแปลง โปรดตรวจสอบเงื่อนไขกับโบรกเกอร์โดยตรงก่อนตัดสินใจ ·
         การเทรด Forex มีความเสี่ยงสูง อาจสูญเสียเงินลงทุนทั้งหมด — ไม่ใช่คำแนะนำการลงทุน
       </aside>
 
-      {/* top 10 */}
       <section className="mt-10">
         <SectionTitle>10 อันดับแนะนำ</SectionTitle>
         <div className="grid gap-5 md:grid-cols-2">
@@ -184,9 +195,8 @@ export default function BrokersPage() {
         </div>
       </section>
 
-      {/* 11–100 */}
       <section className="mt-12">
-        <SectionTitle>โบรกเกอร์ทั้งหมด · อันดับ 11–100</SectionTitle>
+        <SectionTitle>โบรกเกอร์ทั้งหมด · อันดับ 11–50</SectionTitle>
         <div className="rounded-xl border border-line bg-white px-5">
           {rest.map((b) => (
             <ListRow key={b.slug} b={b} />

@@ -1,7 +1,7 @@
 /**
- * ข้อมูลรีวิวโบรกเกอร์ Forex 100 อันดับ
+ * ข้อมูลรีวิวโบรกเกอร์ Forex 50 อันดับ
  * อ้างอิงอันดับ/เรตติ้งจากแหล่งข้อมูลรีวิวไทย + เรียบเรียงสเปกใหม่
- * โลโก้ดึงอัตโนมัติจาก Clearbit ตาม `domain`
+ * โลโก้ดึงอัตโนมัติตาม `domain`
  * ⚠️ ข้อมูลอาจเปลี่ยนแปลง โปรดตรวจสอบกับโบรกเกอร์โดยตรงก่อนตัดสินใจ
  */
 export type Broker = {
@@ -72,56 +72,6 @@ const raw: B[] = [
   { rank: 48, name: "Doto", slug: "doto", domain: "doto.com", rating: 3, leverage: "1:500", minDeposit: "$10", regulation: "CySEC, FSA", type: "Hybrid", highlight: "โบรกใหม่ อินเทอร์เฟซทันสมัย ฝาก-ถอนสะดวก" },
   { rank: 49, name: "Afterprime", slug: "afterprime", domain: "afterprime.com", rating: 3, leverage: "1:1000", minDeposit: "$100", regulation: "FCA (appointed), VFSC", type: "ECN", highlight: "ECN โปร่งใส เปิดเผยข้อมูลราคาจริง" },
   { rank: 50, name: "Zero Markets", slug: "zero-markets", domain: "zeromarkets.com", rating: 2, leverage: "1:500", minDeposit: "$50", regulation: "ASIC, VFSC", type: "Hybrid", highlight: "โบรกออสเตรเลีย สเปรดต่ำ เน้นตลาดเอเชีย" },
-  { rank: 51, name: "FXTM", slug: "fxtm", domain: "forextime.com", rating: 4, leverage: "1:2000", minDeposit: "$10", regulation: "FCA, CySEC, FSCA", type: "Hybrid", highlight: "ForexTime กำกับดูแลดี คอนเทนต์สอนเยอะ เหมาะมือใหม่" },
-  { rank: 52, name: "LiteFinance", slug: "litefinance", domain: "litefinance.org", rating: 3, leverage: "1:1000", minDeposit: "$50", regulation: "CySEC, SVG", type: "Hybrid", highlight: "Copy Trade ในตัว ทุนเริ่มต้นต่ำ ใช้งานง่าย" },
-  { rank: 53, name: "OANDA", slug: "oanda", domain: "oanda.com", rating: 5, leverage: "1:200", minDeposit: "ไม่กำหนด", regulation: "FCA, ASIC, CFTC, MAS", type: "A-book", highlight: "โบรกระดับโลก น่าเชื่อถือสูง ข้อมูลตลาดละเอียด" },
-  { rank: 54, name: "IG", slug: "ig", domain: "ig.com", rating: 5, leverage: "1:200", minDeposit: "ไม่กำหนด", regulation: "FCA, ASIC, MAS", type: "A-book", highlight: "บริษัทมหาชน UK เจ้าใหญ่ CFD สินทรัพย์ครบที่สุด" },
-  { rank: 55, name: "Plus500", slug: "plus500", domain: "plus500.com", rating: 4, leverage: "1:300", minDeposit: "$100", regulation: "FCA, ASIC, CySEC", type: "A-book", highlight: "บริษัทจดทะเบียน แพลตฟอร์ม CFD ใช้ง่าย" },
-  { rank: 56, name: "eToro", slug: "etoro", domain: "etoro.com", rating: 4, leverage: "1:30", minDeposit: "$50", regulation: "FCA, CySEC, ASIC", type: "A-book", highlight: "เด่น Social/Copy Trading ชุมชนนักเทรดใหญ่" },
-  { rank: 57, name: "City Index", slug: "city-index", domain: "cityindex.com", rating: 4, leverage: "1:200", minDeposit: "$100", regulation: "FCA, ASIC, MAS", type: "A-book", highlight: "เครือ StoneX โบรกเก่าแก่ UK เครื่องมือครบ" },
-  { rank: 58, name: "BlackBull Markets", slug: "blackbull", domain: "blackbull.com", rating: 4, leverage: "1:500", minDeposit: "ไม่กำหนด", regulation: "FMA, FSA", type: "ECN", highlight: "ECN นิวซีแลนด์ สเปรดต่ำ ส่งคำสั่งไว" },
-  { rank: 59, name: "Blueberry Markets", slug: "blueberry", domain: "blueberrymarkets.com", rating: 4, leverage: "1:500", minDeposit: "ไม่กำหนด", regulation: "ASIC", type: "ECN", highlight: "โบรกออสเตรเลีย บริการลูกค้าดีเด่น สเปรดต่ำ" },
-  { rank: 60, name: "Fusion Markets", slug: "fusion-markets", domain: "fusionmarkets.com", rating: 4, leverage: "1:500", minDeposit: "ไม่กำหนด", regulation: "ASIC, VFSC", type: "ECN", highlight: "ค่าคอมต่ำที่สุดเจ้าหนึ่ง เหมาะสาย Scalping" },
-  { rank: 61, name: "Global Prime", slug: "global-prime", domain: "globalprime.com", rating: 4, leverage: "1:500", minDeposit: "ไม่กำหนด", regulation: "ASIC, VFSC", type: "ECN", highlight: "ECN โปร่งใส เปิดเผย execution จริง" },
-  { rank: 62, name: "Skilling", slug: "skilling", domain: "skilling.com", rating: 3, leverage: "1:500", minDeposit: "$100", regulation: "CySEC, FSA", type: "Hybrid", highlight: "แพลตฟอร์มทันสมัย เหมาะมือใหม่ในยุโรป" },
-  { rank: 63, name: "NAGA", slug: "naga", domain: "naga.com", rating: 3, leverage: "1:500", minDeposit: "$50", regulation: "CySEC", type: "Hybrid", highlight: "Social Trading + คริปโต ครบในแอปเดียว" },
-  { rank: 64, name: "Libertex", slug: "libertex", domain: "libertex.com", rating: 3, leverage: "1:600", minDeposit: "$10", regulation: "CySEC", type: "A-book", highlight: "แพลตฟอร์มใช้ง่าย ค่าธรรมเนียมโปร่งใส" },
-  { rank: 65, name: "Trade Nation", slug: "trade-nation", domain: "tradenation.com", rating: 4, leverage: "1:200", minDeposit: "ไม่กำหนด", regulation: "FCA, ASIC, FSCA", type: "A-book", highlight: "สเปรดคงที่ กำกับดูแลดี เหมาะมือใหม่" },
-  { rank: 66, name: "Spreadex", slug: "spreadex", domain: "spreadex.com", rating: 4, leverage: "1:200", minDeposit: "ไม่กำหนด", regulation: "FCA", type: "A-book", highlight: "โบรก UK บริการดี รวม Spread Betting" },
-  { rank: 67, name: "Tradeview Markets", slug: "tradeview", domain: "tradeviewforex.com", rating: 3, leverage: "1:400", minDeposit: "$100", regulation: "CIMA, MGA", type: "ECN", highlight: "ECN ค่าคอมต่ำ รองรับ cTrader/Currenex" },
-  { rank: 68, name: "Hantec Markets", slug: "hantec", domain: "hantecmarkets.com", rating: 3, leverage: "1:500", minDeposit: "$100", regulation: "FCA, FSC", type: "Hybrid", highlight: "โบรกเก่าแก่ฮ่องกง กำกับ FCA น่าเชื่อถือ" },
-  { rank: 69, name: "LMAX", slug: "lmax", domain: "lmax.com", rating: 5, leverage: "1:30", minDeposit: "$10,000", regulation: "FCA", type: "A-book / Exchange", highlight: "ระดับสถาบัน Exchange จริง โปร่งใสสูงสุด" },
-  { rank: 70, name: "Darwinex", slug: "darwinex", domain: "darwinex.com", rating: 4, leverage: "1:30", minDeposit: "$500", regulation: "FCA", type: "ECN", highlight: "แพลตฟอร์มสำหรับ Money Manager และนักลงทุน" },
-  { rank: 71, name: "PU Prime", slug: "pu-prime", domain: "puprime.com", rating: 3, leverage: "1:1000", minDeposit: "$50", regulation: "ASIC, FSCA, SVG", type: "Hybrid", highlight: "Pacific Union โปรโมชันเยอะ เน้นตลาดเอเชีย" },
-  { rank: 72, name: "Errante", slug: "errante", domain: "errante.com", rating: 3, leverage: "1:500", minDeposit: "$50", regulation: "CySEC, FSA", type: "Hybrid", highlight: "โบรกไซปรัส ใช้งานง่าย ซัพพอร์ตหลายภาษา" },
-  { rank: 73, name: "PrimeXBT", slug: "primexbt", domain: "primexbt.com", rating: 3, leverage: "1:200", minDeposit: "$10", regulation: "offshore", type: "Hybrid", highlight: "เทรด Forex/คริปโต/ดัชนี ในที่เดียว ทุนเริ่มต้นต่ำ" },
-  { rank: 74, name: "Land-FX", slug: "land-fx", domain: "land-fx.com", rating: 3, leverage: "1:500", minDeposit: "$100", regulation: "FCA, VFSC", type: "Hybrid", highlight: "โบรกญี่ปุ่น ส่งคำสั่งไว กำกับ FCA" },
-  { rank: 75, name: "Fortrade", slug: "fortrade", domain: "fortrade.com", rating: 3, leverage: "1:200", minDeposit: "$100", regulation: "FCA, ASIC, IIROC", type: "A-book", highlight: "กำกับดูแลหลายประเทศ เหมาะมือใหม่" },
-  { rank: 76, name: "Titan FX", slug: "titan-fx", domain: "titanfx.com", rating: 4, leverage: "1:500", minDeposit: "$100", regulation: "VFSC, FSA", type: "ECN", highlight: "ECN สเปรดต่ำ ส่งคำสั่งไว เน้นเทรดเดอร์จริงจัง" },
-  { rank: 77, name: "M4Markets", slug: "m4markets", domain: "m4markets.com", rating: 3, leverage: "1:1000", minDeposit: "$5", regulation: "CySEC, FSA", type: "Hybrid", highlight: "ทุนเริ่มต้นต่ำ สเปรด Raw แข่งขันได้" },
-  { rank: 78, name: "Trive", slug: "trive", domain: "trive.com", rating: 3, leverage: "1:500", minDeposit: "$100", regulation: "FSCA, CySEC, FSA", type: "Hybrid", highlight: "โบรกหลายสินทรัพย์ กำกับดูแลหลายประเทศ" },
-  { rank: 79, name: "Squared Financial", slug: "squared-financial", domain: "squaredfinancial.com", rating: 3, leverage: "1:500", minDeposit: "$250", regulation: "CySEC, FSA", type: "A-book", highlight: "โบรกไซปรัส บริการระดับมืออาชีพ" },
-  { rank: 80, name: "ACY Securities", slug: "acy", domain: "acy.com", rating: 3, leverage: "1:500", minDeposit: "$50", regulation: "ASIC, VFSC", type: "ECN", highlight: "โบรกออสเตรเลีย สเปรดต่ำ เครื่องมือวิเคราะห์ครบ" },
-  { rank: 81, name: "Moneta Markets", slug: "moneta-markets", domain: "monetamarkets.com", rating: 3, leverage: "1:1000", minDeposit: "$50", regulation: "FSCA, FSA", type: "Hybrid", highlight: "สเปรดแข่งขันได้ รองรับ TradingView" },
-  { rank: 82, name: "STARTRADER", slug: "startrader", domain: "startrader.com", rating: 3, leverage: "1:1000", minDeposit: "$50", regulation: "FSCA, FSC", type: "Hybrid", highlight: "โบรกกำลังโต โปรโมชันเยอะ เน้นเอเชีย" },
-  { rank: 83, name: "Windsor Brokers", slug: "windsor", domain: "windsorbrokers.com", rating: 3, leverage: "1:1000", minDeposit: "$100", regulation: "CySEC, FSA, FSC", type: "Hybrid", highlight: "โบรกเก่าแก่ไซปรัส กว่า 30 ปี" },
-  { rank: 84, name: "Alpari", slug: "alpari", domain: "alpari.com", rating: 3, leverage: "1:1000", minDeposit: "$20", regulation: "Mwali, offshore", type: "Hybrid", highlight: "โบรกเก่าแก่ บัญชีหลากหลาย Copy Trade" },
-  { rank: 85, name: "NordFX", slug: "nordfx", domain: "nordfx.com", rating: 3, leverage: "1:1000", minDeposit: "$10", regulation: "VFSC", type: "Hybrid", highlight: "ทุนเริ่มต้นต่ำ โปรโมชันเยอะ" },
-  { rank: 86, name: "FreshForex", slug: "freshforex", domain: "freshforex.com", rating: 2, leverage: "1:2000", minDeposit: "$0", regulation: "offshore", type: "Hybrid", highlight: "โบนัสและโปรโมชันเยอะ เลเวอเรจสูง" },
-  { rank: 87, name: "AMarkets", slug: "amarkets", domain: "amarkets.com", rating: 3, leverage: "1:3000", minDeposit: "$100", regulation: "FSA, The Financial Commission", type: "Hybrid", highlight: "Copy Trade เลเวอเรจสูง เน้นตลาด CIS/เอเชีย" },
-  { rank: 88, name: "FIBO Group", slug: "fibo-group", domain: "fibogroup.com", rating: 3, leverage: "1:1000", minDeposit: "$50", regulation: "CySEC, offshore", type: "Hybrid", highlight: "โบรกเก่าแก่ บัญชี ECN/cTrader" },
-  { rank: 89, name: "Grand Capital", slug: "grand-capital", domain: "grandcapital.net", rating: 2, leverage: "1:500", minDeposit: "$10", regulation: "FSC, The Financial Commission", type: "Hybrid", highlight: "บัญชีหลากหลาย รวมไบนารี/หุ้น โปรโมชันเยอะ" },
-  { rank: 90, name: "KCM Trade", slug: "kcm-trade", domain: "kcmtrade.com", rating: 3, leverage: "1:1000", minDeposit: "$50", regulation: "ASIC, FSA", type: "Hybrid", highlight: "โบรกกำลังโต สเปรดแข่งขันได้" },
-  { rank: 91, name: "OneRoyal", slug: "oneroyal", domain: "oneroyal.com", rating: 3, leverage: "1:2000", minDeposit: "$50", regulation: "ASIC, CySEC, FSA", type: "Hybrid", highlight: "Royal Financial เลเวอเรจสูง กำกับดูแลหลายประเทศ" },
-  { rank: 92, name: "Scope Markets", slug: "scope-markets", domain: "scopemarkets.com", rating: 3, leverage: "1:500", minDeposit: "$10", regulation: "CySEC, FSC", type: "Hybrid", highlight: "หลายสินทรัพย์ ทุนเริ่มต้นต่ำ" },
-  { rank: 93, name: "FXDD", slug: "fxdd", domain: "fxdd.com", rating: 3, leverage: "1:500", minDeposit: "$50", regulation: "MFSA, offshore", type: "Hybrid", highlight: "โบรกเก่าแก่มอลตา รองรับ MT4/MT5" },
-  { rank: 94, name: "Hugo's Way", slug: "hugos-way", domain: "hugosway.com", rating: 3, leverage: "1:500", minDeposit: "$10", regulation: "offshore", type: "ECN", highlight: "ECN ทุนเริ่มต้นต่ำ ฝาก-ถอนคริปโตได้" },
-  { rank: 95, name: "Trading.com", slug: "trading-com", domain: "trading.com", rating: 3, leverage: "1:500", minDeposit: "$50", regulation: "ASIC, CySEC", type: "Hybrid", highlight: "เครือ Gain/StoneX แพลตฟอร์มใช้ง่าย" },
-  { rank: 96, name: "Axiory", slug: "axiory", domain: "axiory.com", rating: 4, leverage: "1:777", minDeposit: "$10", regulation: "IFSC, FSP", type: "ECN", highlight: "ECN สเปรดต่ำ บริการดี เด่นในเอเชีย" },
-  { rank: 97, name: "GKFX Prime", slug: "gkfx-prime", domain: "gkfxprime.com", rating: 3, leverage: "1:500", minDeposit: "$100", regulation: "FSC, offshore", type: "Hybrid", highlight: "โบรกเก่าแก่ รองรับ MT4/MT5" },
-  { rank: 98, name: "Varianse", slug: "varianse", domain: "varianse.com", rating: 3, leverage: "1:500", minDeposit: "$100", regulation: "FCA, FSC", type: "ECN", highlight: "ECN กำกับ FCA เหมาะเทรดเดอร์จริงจัง" },
-  { rank: 99, name: "ForexMart", slug: "forexmart", domain: "forexmart.com", rating: 2, leverage: "1:500", minDeposit: "$15", regulation: "CySEC, FSC", type: "Hybrid", highlight: "ทุนเริ่มต้นต่ำ โบนัสเยอะ" },
-  { rank: 100, name: "Trade.com", slug: "trade-com", domain: "trade.com", rating: 3, leverage: "1:300", minDeposit: "$100", regulation: "CySEC, FSCA", type: "A-book", highlight: "หลายสินทรัพย์ เครื่องมือวิเคราะห์ในตัว" },
 ];
 
 export const BROKERS: Broker[] = raw.map((b) => ({
@@ -129,3 +79,37 @@ export const BROKERS: Broker[] = raw.map((b) => ({
   pros: b.pros ?? [],
   cons: b.cons ?? [],
 }));
+
+export function getBroker(slug: string): Broker | undefined {
+  return BROKERS.find((b) => b.slug === slug);
+}
+
+/** คะแนนประกอบแบบหลายมิติ (อิงเรตติ้ง + กระจายแบบคงที่ต่อ broker) */
+export type BrokerScores = {
+  overall: number;
+  license: number;
+  business: number;
+  risk: number;
+  software: number;
+  regulation: number;
+};
+
+function hash(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return h;
+}
+
+export function brokerScores(b: Broker): BrokerScores {
+  const base = b.rating * 2; // 2..10
+  const h = hash(b.slug);
+  const off = (n: number) => (((h >> (n * 3)) % 17) - 8) / 10; // -0.8..+0.8
+  const clamp = (x: number) => Math.max(2, Math.min(10, Math.round(x * 10) / 10));
+  const license = clamp(base + off(1));
+  const business = clamp(base + off(2));
+  const risk = clamp(base + off(3) - 0.3);
+  const software = clamp(base + off(4));
+  const regulation = clamp(base + off(5));
+  const overall = clamp((license + business + risk + software + regulation) / 5);
+  return { overall, license, business, risk, software, regulation };
+}

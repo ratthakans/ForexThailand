@@ -2,6 +2,7 @@ import Link from "next/link";
 import { query, type Article } from "@/lib/db";
 import { categoryLabel, formatThaiDate } from "@/lib/format";
 import { NewsImage } from "@/components/NewsImage";
+import TradingViewForex from "@/components/TradingViewForex";
 
 export const revalidate = 60;
 
@@ -175,16 +176,24 @@ export default async function Home() {
           )}
         </div>
 
-        {ranked.length > 0 && (
-          <aside className="lg:col-span-1">
-            <SectionHeader>เรื่องเด่น</SectionHeader>
-            <ul>
-              {ranked.map((a, i) => (
-                <RankItem key={a.id} a={a} rank={i + 1} />
-              ))}
-            </ul>
-          </aside>
-        )}
+        <aside className="lg:col-span-1">
+          {/* อัตราแลกเปลี่ยนเรียลไทม์ (TradingView) */}
+          <SectionHeader>อัตราแลกเปลี่ยน</SectionHeader>
+          <div className="overflow-hidden rounded-xl border border-line bg-ink p-1">
+            <TradingViewForex />
+          </div>
+
+          {ranked.length > 0 && (
+            <div className="mt-8">
+              <SectionHeader>เรื่องเด่น</SectionHeader>
+              <ul>
+                {ranked.map((a, i) => (
+                  <RankItem key={a.id} a={a} rank={i + 1} />
+                ))}
+              </ul>
+            </div>
+          )}
+        </aside>
       </div>
     </div>
   );
