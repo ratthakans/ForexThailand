@@ -163,7 +163,7 @@ export default function BrokersPage() {
   const rest = BROKERS.slice(10);
 
   return (
-    <div className="mx-auto max-w-5xl px-5 py-8 md:py-10">
+    <div className="mx-auto max-w-6xl px-5 lg:px-8 py-8 md:py-10">
       <header className="border-b-2 border-ink pb-6">
         <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-accent">
           รีวิวโบรกเกอร์

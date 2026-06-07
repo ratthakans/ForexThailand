@@ -65,14 +65,14 @@ function SiteHeader() {
     <header>
       {/* แถบราคาวิ่ง (marquee) ตลาดเรียลไทม์ */}
       <div className="border-b border-white/10 bg-ink">
-        <div className="mx-auto max-w-6xl px-2">
+        <div className="mx-auto max-w-[1440px] px-2">
           <MarketTicker />
         </div>
       </div>
 
       {/* มาสต์เฮดดำ */}
       <div className="bg-ink">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-4">
           <Link href="/" className="block">
             <Wordmark light />
             <span className="mt-1 block text-[11px] tracking-wide text-white/55">
@@ -84,7 +84,7 @@ function SiteHeader() {
 
       {/* แถบเมนู (sticky) */}
       <nav className="sticky top-0 z-30 border-b border-line bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center gap-1 overflow-x-auto px-5">
+        <div className="mx-auto flex max-w-[1440px] items-center gap-1 overflow-x-auto px-5">
           {NAV.map((n) => (
             <Link
               key={n.label}
@@ -108,7 +108,7 @@ function SiteFooter() {
   const cats = ["ค่าเงิน", "ทองคำ", "หุ้น", "คริปโต", "เศรษฐกิจ"];
   return (
     <footer className="mt-20 bg-ink text-white">
-      <div className="mx-auto max-w-6xl px-5 py-12">
+      <div className="mx-auto max-w-[1440px] px-5 lg:px-8 py-12">
         <div className="grid gap-10 md:grid-cols-[1.7fr_1fr_1fr]">
           <div>
             <Wordmark light />

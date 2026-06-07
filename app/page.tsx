@@ -79,10 +79,10 @@ function Hero({ a }: { a: Article }) {
       />
       <div className="flex flex-col justify-center md:col-span-5">
         <Chip category={a.category} />
-        <h1 className="mt-2 font-display text-2xl font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent sm:text-[1.9rem] sm:leading-[1.18]">
+        <h1 className="mt-2 font-display text-2xl font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent sm:text-[2.1rem] sm:leading-[1.15] lg:text-[2.5rem]">
           {a.title_th}
         </h1>
-        <p className="mt-3 line-clamp-3 text-[15px] leading-relaxed text-ink-soft">
+        <p className="mt-3 line-clamp-3 max-w-prose text-[15px] leading-relaxed text-ink-soft lg:text-base">
           {a.hook?.trim() || a.body_th}
         </p>
         <time className="mt-4 text-[11px] uppercase tracking-wide text-ink-soft">
@@ -146,7 +146,7 @@ export default async function Home() {
 
   if (articles.length === 0) {
     return (
-      <div className="mx-auto max-w-6xl px-5 py-24 text-center">
+      <div className="mx-auto max-w-[1440px] px-5 lg:px-8 py-24 text-center">
         <p className="font-display text-xl font-bold text-ink">
           ยังไม่มีข่าวเผยแพร่ในขณะนี้
         </p>
@@ -183,7 +183,7 @@ export default async function Home() {
     <>
       {/* ข่าวเด่น — พื้นขาว */}
       <section className="bg-bg">
-        <div className="mx-auto max-w-6xl px-5 py-10 md:py-12">
+        <div className="mx-auto max-w-[1440px] px-5 lg:px-8 py-12 md:py-16">
           <SectionHeader>ข่าวเด่น</SectionHeader>
           <Hero a={lead} />
         </div>
@@ -191,7 +191,7 @@ export default async function Home() {
 
       {/* ถ่ายทอดสด — พื้นดำ */}
       <section className="bg-ink">
-        <div className="mx-auto max-w-6xl px-5 py-10 md:py-12">
+        <div className="mx-auto max-w-[1440px] px-5 lg:px-8 py-12 md:py-16">
           <div className="mb-5 flex items-center gap-3">
             <span className="flex items-center gap-1.5 rounded bg-breaking px-2 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
@@ -211,11 +211,11 @@ export default async function Home() {
 
       {/* ข่าวล่าสุด + แถบข้าง — พื้นขาว */}
       <section className="bg-bg">
-        <div className="mx-auto max-w-6xl px-5 py-10 md:py-12">
+        <div className="mx-auto max-w-[1440px] px-5 lg:px-8 py-12 md:py-16">
           <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
             <div className="lg:col-span-2">
               <SectionHeader>ข่าวล่าสุด</SectionHeader>
-              <div className="grid gap-x-6 gap-y-9 sm:grid-cols-2">
+              <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
                 {latest.map((a) => (
                   <Card key={a.id} a={a} />
                 ))}
@@ -245,7 +245,7 @@ export default async function Home() {
 
       {/* โปรโมชันแนะนำ — พื้นดำ */}
       <section className="bg-ink">
-        <div className="mx-auto max-w-6xl px-5 py-10 md:py-12">
+        <div className="mx-auto max-w-[1440px] px-5 lg:px-8 py-12 md:py-16">
           <SectionHeader dark>โปรโมชันโบรกเกอร์แนะนำ</SectionHeader>
           <PromoCarousel slides={promoSlides} />
           <p className="mt-5 text-[11px] text-white/40">
@@ -257,7 +257,7 @@ export default async function Home() {
 
       {/* ปฏิทินเศรษฐกิจ — พื้นขาว */}
       <section className="bg-bg">
-        <div className="mx-auto max-w-6xl px-5 py-10 md:py-12">
+        <div className="mx-auto max-w-[1440px] px-5 lg:px-8 py-12 md:py-16">
           <SectionHeader>ปฏิทินเศรษฐกิจ</SectionHeader>
           <div className="overflow-hidden rounded-xl border border-line">
             <EconomicCalendar />
