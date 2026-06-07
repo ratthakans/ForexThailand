@@ -28,13 +28,8 @@ async function getArticles(): Promise<Article[]> {
 }
 
 function Chip({ category }: { category: string }) {
-  const breaking = category === "breaking";
   return (
-    <span
-      className={`text-[11px] font-bold uppercase tracking-[0.14em] ${
-        breaking ? "text-breaking" : "text-accent"
-      }`}
-    >
+    <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">
       {categoryLabel(category)}
     </span>
   );

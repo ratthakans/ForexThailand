@@ -42,7 +42,7 @@ export function NewsImage({
   return (
     <figure className={className}>
       <div
-        className={`relative w-full overflow-hidden bg-[#f1f1ef] ${ratioClassName}`}
+        className={`relative w-full overflow-hidden bg-surface ${ratioClassName}`}
       >
         <Image
           ref={checkBroken}

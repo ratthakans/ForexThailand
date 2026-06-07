@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  /* THE STANDARD WEALTH-style: ขาวสะอาด หมึกเกือบดำ accent teal การเงิน */
+  /* Modern fintech palette: Navy + Orange */
   --bg: #ffffff;
-  --ink: #16181d;
-  --ink-soft: #6b7280;
-  --line: #e9e9ec;
-  --accent: #0a9d8f; /* teal — chip หมวด/เส้น section/ลิงก์ (เปลี่ยนที่เดียวจบ) */
-  --breaking: #e02424;
+  --ink: #14213d; /* Oxford navy — หัวข้อ/มาสต์เฮด/ฟุตเตอร์ */
+  --ink-soft: #5c6478; /* navy-gray — ข้อความรอง */
+  --line: #e5e5e5; /* platinum — เส้น/พื้นอ่อน */
+  --surface: #e5e5e5;
+  --accent: #fca311; /* orange — chip/ลิงก์/ปุ่ม/ไฮไลต์ */
+  --breaking: #c81e1e; /* แดง — ใช้เฉพาะสถานะ danger ใน admin */
 }
 
 @theme inline {
@@ -16,6 +17,7 @@
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-line: var(--line);
+  --color-surface: var(--surface);
   --color-accent: var(--accent);
   --color-breaking: var(--breaking);
   --font-display: var(--font-anuphan);

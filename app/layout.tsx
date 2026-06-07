@@ -35,22 +35,17 @@ const NAV = [
   { label: "ทองคำ", href: "/" },
   { label: "หุ้น", href: "/" },
   { label: "คริปโต", href: "/" },
-  { label: "เศรษฐกิจ", href: "/" },
+  { label: "รีวิวโบรกเกอร์", href: "/brokers" },
 ];
 
 function Wordmark({ light = false }: { light?: boolean }) {
   return (
-    <span className="inline-flex items-center gap-2">
-      <span
-        className={`font-display text-xl font-bold tracking-tight sm:text-2xl ${
-          light ? "text-white" : "text-ink"
-        }`}
-      >
-        Forex Thailand
-      </span>
-      <span className="rounded bg-accent px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
-        Wealth
-      </span>
+    <span
+      className={`font-display text-xl font-bold tracking-tight sm:text-2xl ${
+        light ? "text-white" : "text-ink"
+      }`}
+    >
+      Forex Thailand
     </span>
   );
 }

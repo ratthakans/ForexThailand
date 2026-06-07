@@ -100,8 +100,6 @@ export default async function ArticlePage({ params }: PageProps) {
 
   const paragraphs = toParagraphs(article.body_th);
 
-  const breaking = article.category === "breaking";
-
   return (
     <article className="mx-auto max-w-2xl px-5 py-8 md:py-12">
       {/* breadcrumb */}
@@ -110,18 +108,12 @@ export default async function ArticlePage({ params }: PageProps) {
           หน้าแรก
         </Link>
         <span className="mx-2">›</span>
-        <span className={breaking ? "text-breaking" : "text-accent"}>
-          {categoryLabel(article.category)}
-        </span>
+        <span className="text-accent">{categoryLabel(article.category)}</span>
       </nav>
 
       {/* headline */}
       <header>
-        <span
-          className={`text-[11px] font-bold uppercase tracking-[0.14em] ${
-            breaking ? "text-breaking" : "text-accent"
-          }`}
-        >
+        <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">
           {categoryLabel(article.category)}
         </span>
         <h1 className="mt-2 font-display text-3xl font-bold leading-tight tracking-tight text-ink sm:text-[2.4rem] sm:leading-[1.15]">

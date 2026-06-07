@@ -15,7 +15,7 @@ export function GET() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "92px",
-          background: "#16181d",
+          background: "#14213d",
           color: "#ffffff",
           fontFamily: "sans-serif",
         }}
@@ -25,35 +25,18 @@ export function GET() {
             display: "flex",
             width: 96,
             height: 8,
-            background: "#0a9d8f",
+            background: "#fca311",
             marginBottom: 44,
           }}
         />
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <span style={{ fontSize: 100, fontWeight: 700, letterSpacing: -2 }}>
-            Forex Thailand
-          </span>
-          <span
-            style={{
-              display: "flex",
-              marginLeft: 28,
-              fontSize: 30,
-              fontWeight: 700,
-              background: "#0a9d8f",
-              color: "#ffffff",
-              padding: "10px 20px",
-              borderRadius: 10,
-              letterSpacing: 3,
-            }}
-          >
-            WEALTH
-          </span>
-        </div>
+        <span style={{ fontSize: 104, fontWeight: 700, letterSpacing: -2 }}>
+          Forex Thailand
+        </span>
         <span
           style={{
-            marginTop: 30,
+            marginTop: 26,
             fontSize: 36,
-            color: "rgba(255,255,255,0.6)",
+            color: "#fca311",
             letterSpacing: 5,
           }}
         >
