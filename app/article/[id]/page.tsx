@@ -1,3 +1,4 @@
+import { cache } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -16,7 +17,9 @@ type PageProps = {
   params: Promise<{ id: string }>;
 };
 
-async function getArticle(idRaw: string): Promise<Article | null> {
+// cache() → generateMetadata กับ page component เรียก getArticle ตัวเดียวกัน
+// ใน request เดียว จะ query DB แค่ครั้งเดียว (เร็วขึ้น ลดภาระ Neon ตอน bot มา scrape)
+const getArticle = cache(async (idRaw: string): Promise<Article | null> => {
   const id = Number(idRaw);
   if (!Number.isInteger(id) || id <= 0) return null;
   if (!process.env.DATABASE_URL) {
@@ -38,7 +41,7 @@ async function getArticle(idRaw: string): Promise<Article | null> {
     console.warn("getArticle failed:", err);
     return null;
   }
-}
+});
 
 export async function generateMetadata({
   params,
