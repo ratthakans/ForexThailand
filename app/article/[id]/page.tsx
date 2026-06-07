@@ -55,10 +55,14 @@ export async function generateMetadata({
   return {
     title: article.title_th,
     description,
+    alternates: {
+      canonical: `/article/${article.id}`,
+    },
     openGraph: {
       title: article.title_th,
       description,
       type: "article",
+      url: `/article/${article.id}`,
       publishedTime: article.created_at.toISOString(),
       ...(article.image_url
         ? { images: [{ url: article.image_url, alt: article.title_th }] }
