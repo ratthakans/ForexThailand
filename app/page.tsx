@@ -3,6 +3,7 @@ import { query, type Article } from "@/lib/db";
 import { categoryLabel, formatThaiDate } from "@/lib/format";
 import { NewsImage } from "@/components/NewsImage";
 import TradingViewForex from "@/components/TradingViewForex";
+import EconomicCalendar from "@/components/EconomicCalendar";
 
 export const revalidate = 60;
 
@@ -195,6 +196,14 @@ export default async function Home() {
           )}
         </aside>
       </div>
+
+      {/* ปฏิทินเศรษฐกิจโลก — เหตุการณ์ที่ขับเคลื่อนตลาด */}
+      <section className="mt-12">
+        <SectionHeader>ปฏิทินเศรษฐกิจ</SectionHeader>
+        <div className="overflow-hidden rounded-xl border border-line">
+          <EconomicCalendar />
+        </div>
+      </section>
     </div>
   );
 }

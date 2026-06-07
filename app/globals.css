@@ -7,7 +7,7 @@
   --ink-soft: #6a6a70; /* gray — ข้อความรอง */
   --line: #e7e7e7;
   --surface: #f5f4f1;
-  --accent: #9a7b1f; /* ทองเข้มอ่านง่ายบนพื้นขาว (text/border) */
+  --accent: #7d6414; /* ทองเข้ม (มืดลง) อ่านง่ายบนพื้นขาว */
   --breaking: #c81e1e; /* แดง — danger ใน admin เท่านั้น */
 }
 
@@ -32,15 +32,15 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* ทอง gradient โลหะวาว — ใช้กับพื้น chip/bar/ปุ่ม */
+/* ทอง gradient โลหะ (โทนเข้มขึ้น) — ใช้กับพื้น chip/bar/ปุ่ม */
 .bg-gold {
   background-image: linear-gradient(
     135deg,
-    #7a5c12 0%,
-    #b8860b 22%,
-    #f0d57a 50%,
-    #d4af37 72%,
-    #8a6d1f 100%
+    #4f3a06 0%,
+    #7c5f10 24%,
+    #c39a39 52%,
+    #9c781b 74%,
+    #5f470a 100%
   );
 }
 
@@ -48,10 +48,10 @@ body {
 .text-gold-grad {
   background-image: linear-gradient(
     120deg,
-    #b8860b 0%,
-    #f3dd8c 38%,
-    #d4af37 62%,
-    #b8860b 100%
+    #a07d1c 0%,
+    #d6b052 40%,
+    #b88f2b 64%,
+    #8a6912 100%
   );
   -webkit-background-clip: text;
   background-clip: text;

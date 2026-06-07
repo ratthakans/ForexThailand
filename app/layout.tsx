@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Anuphan, Noto_Sans_Thai } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
+import MarketTicker from "@/components/MarketTicker";
 
 const display = Anuphan({
   subsets: ["thai", "latin"],
@@ -53,6 +54,13 @@ function Wordmark({ light = false }: { light?: boolean }) {
 function SiteHeader() {
   return (
     <header>
+      {/* แถบราคาวิ่ง (marquee) ตลาดเรียลไทม์ */}
+      <div className="border-b border-white/10 bg-ink">
+        <div className="mx-auto max-w-6xl px-2">
+          <MarketTicker />
+        </div>
+      </div>
+
       {/* มาสต์เฮดดำ */}
       <div className="bg-ink">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">

@@ -25,7 +25,7 @@ export function GET() {
             display: "flex",
             width: 110,
             height: 8,
-            background: "linear-gradient(90deg, #b8860b, #f0d57a, #d4af37)",
+            background: "linear-gradient(90deg, #8a6912, #d2aa48, #a07c1c)",
             marginBottom: 44,
           }}
         />
@@ -34,7 +34,7 @@ export function GET() {
             fontSize: 104,
             fontWeight: 700,
             letterSpacing: -2,
-            color: "#e8c766",
+            color: "#d2aa48",
           }}
         >
           Forex Thailand
@@ -43,7 +43,7 @@ export function GET() {
           style={{
             marginTop: 26,
             fontSize: 36,
-            color: "#cbb277",
+            color: "#b89f6b",
             letterSpacing: 5,
           }}
         >
