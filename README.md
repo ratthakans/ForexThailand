@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Forex Thailand
 
-## Getting Started
+เว็บข่าว Forex ภาษาไทย — ข่าวค่าเงิน ทองคำ และเศรษฐกิจ พร้อม dashboard รีวิวข่าวก่อนเผยแพร่และโพสขึ้น Facebook อัตโนมัติผ่าน n8n
 
-First, run the development server:
+สร้างด้วย Next.js (App Router) + TypeScript + Tailwind CSS + Neon Postgres (ผ่าน `pg` โดยตรง ไม่ใช้ ORM)
+
+## เริ่มต้นใช้งาน
 
 ```bash
+# 1. ติดตั้ง dependencies
+npm install
+
+# 2. ตั้งค่า env — copy แล้วกรอกค่าจริง
+cp .env.example .env
+
+# 3. รัน dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+เปิด [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| ตัวแปร | จำเป็น | ใช้ทำอะไร |
+| --- | --- | --- |
+| `DATABASE_URL` | ✅ | connection string ของ Neon Postgres (แบบ pooled) |
+| `ADMIN_PASSWORD` | ✅ บน production | รหัสผ่านเข้าหน้า `/admin` (Basic Auth, username ใส่อะไรก็ได้) |
+| `N8N_PUBLISH_WEBHOOK` | ไม่บังคับ | URL webhook ของ n8n — หลังกดอนุมัติ เว็บจะ POST `{ id }` ไปให้เพื่อโพส Facebook ถ้าว่างจะข้าม |
+| `NEXT_PUBLIC_SITE_URL` | แนะนำ | URL จริงของเว็บ ใช้สร้าง absolute URL ให้ Open Graph (Facebook preview) |
 
-## Learn More
+## หน้าหลัก ๆ
 
-To learn more about Next.js, take a look at the following resources:
+- `/` — รายการข่าวที่เผยแพร่แล้ว (status `approved` / `posted`)
+- `/article/[id]` — หน้าบทความเต็ม พร้อม Open Graph metadata สำหรับแชร์ Facebook
+- `/admin` — dashboard รีวิวข่าว status `pending_review` กดอนุมัติ/ปฏิเสธได้ (ติดรหัสผ่าน)
+- `POST /api/review` — API อนุมัติ/ปฏิเสธ body: `{ id, action: 'approve' | 'reject' }`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Flow ของข่าว
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+n8n เขียนข่าวลง DB (pending_review)
+  → ทีมงานกดอนุมัติที่ /admin
+  → status เป็น approved + ยิง webhook ไป n8n
+  → n8n โพส Facebook แล้วอัปเดต status เป็น posted
+```
 
-## Deploy on Vercel
+## Deploy ขึ้น Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. push โค้ดขึ้น GitHub แล้ว import โปรเจกต์ใน Vercel
+2. ตั้ง Environment Variables ทั้ง 4 ตัวข้างบนใน Project Settings
+3. Deploy — หน้าแรกและหน้าบทความ revalidate ทุก 60 วินาที

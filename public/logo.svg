@@ -1,0 +1,15 @@
+<svg viewBox="0 0 132 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Forex Thailand">
+  <g transform="skewX(-9)" fill="none" stroke="currentColor" stroke-width="15" stroke-linecap="square" stroke-linejoin="miter">
+    <!-- F -->
+    <path d="M24 20 V78" />
+    <path d="M24 21 H58" />
+    <path d="M24 46 H50" />
+    <!-- X: เส้นทแยงลง -->
+    <path d="M66 20 L96 78" />
+    <!-- X: เส้นทแยงขึ้น = ลูกศรพุ่งขึ้น -->
+    <path d="M64 78 L108 22" />
+  </g>
+  <!-- หัวลูกศร (เติมทึบ) ชี้ขึ้นขวา -->
+  <path transform="skewX(-9)" fill="currentColor" stroke="currentColor" stroke-width="3" stroke-linejoin="miter"
+        d="M114 14 L90 16 L106 34 Z" />
+</svg>
