@@ -33,6 +33,7 @@ const getArticle = cache(async (idRaw: string): Promise<Article | null> => {
          FROM articles
         WHERE id = $1
           AND status IN ('approved', 'posted')
+          AND trim(coalesce(title_th, '')) <> ''
         LIMIT 1`,
       [id]
     );
@@ -112,7 +113,7 @@ export default async function ArticlePage({ params }: PageProps) {
         >
           {categoryLabel(article.category)}
         </span>
-        <h1 className="mt-2 font-serif text-3xl font-bold leading-tight tracking-tight text-ink sm:text-[2.4rem] sm:leading-[1.15]">
+        <h1 className="mt-2 font-display text-3xl font-bold leading-tight tracking-tight text-ink sm:text-[2.4rem] sm:leading-[1.15]">
           {article.title_th}
         </h1>
         <time className="mt-4 block border-b border-line pb-5 text-xs uppercase tracking-wide text-ink-soft">

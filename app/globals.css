@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  /* Editorial broadsheet: กระดาษอุ่น หมึกดำ เส้นบาง accent แดงหนังสือพิมพ์ */
-  --bg: #faf9f6;
-  --ink: #1a1a18;
-  --ink-soft: #6e6a62;
-  --line: #e4e0d7;
-  --accent: #8a1c1c; /* แดง oxblood — kicker/ลิงก์ (เปลี่ยนที่เดียวจบ) */
-  --breaking: #b3261e;
+  /* THE STANDARD WEALTH-style: ขาวสะอาด หมึกเกือบดำ accent teal การเงิน */
+  --bg: #ffffff;
+  --ink: #16181d;
+  --ink-soft: #6b7280;
+  --line: #e9e9ec;
+  --accent: #0a9d8f; /* teal — chip หมวด/เส้น section/ลิงก์ (เปลี่ยนที่เดียวจบ) */
+  --breaking: #e02424;
 }
 
 @theme inline {
@@ -18,8 +18,8 @@
   --color-line: var(--line);
   --color-accent: var(--accent);
   --color-breaking: var(--breaking);
-  --font-serif: var(--font-noto-serif-thai);
-  --font-sans: var(--font-sarabun);
+  --font-display: var(--font-anuphan);
+  --font-sans: var(--font-noto-thai);
 }
 
 body {
@@ -30,7 +30,6 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* ปรับการตัดบรรทัดของหัวข้อภาษาไทยให้สวยขึ้น */
 .text-balance {
   text-wrap: balance;
 }

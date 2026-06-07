@@ -104,7 +104,7 @@ function PendingItem({
             </span>
           </div>
 
-          <h2 className="mt-2 font-serif text-lg font-bold leading-snug text-ink">
+          <h2 className="mt-2 font-display text-lg font-bold leading-snug text-ink">
             {article.title_th}
           </h2>
 
@@ -182,7 +182,7 @@ export function AdminReviewList({ initial }: { initial: PendingArticle[] }) {
   if (items.length === 0) {
     return (
       <div className="border border-dashed border-line py-16 text-center">
-        <p className="font-serif text-lg font-bold text-ink">
+        <p className="font-display text-lg font-bold text-ink">
           ไม่มีข่าวรอรีวิว 🎉
         </p>
         <p className="mt-1 text-sm text-ink-soft">

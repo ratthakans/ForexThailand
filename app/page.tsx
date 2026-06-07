@@ -16,21 +16,21 @@ async function getArticles(): Promise<Article[]> {
               image_credit, category, status, fb_post_id, created_at
          FROM articles
         WHERE status IN ('approved', 'posted')
+          AND trim(coalesce(title_th, '')) <> ''
         ORDER BY created_at DESC`
     );
     return rows;
   } catch (err) {
-    // อย่าให้หน้าเว็บล่มถ้า DB ต่อไม่ได้ — log แล้วแสดง empty state
     console.warn("getArticles failed:", err);
     return [];
   }
 }
 
-function Kicker({ category }: { category: string }) {
+function Chip({ category }: { category: string }) {
   const breaking = category === "breaking";
   return (
     <span
-      className={`text-[11px] font-bold uppercase tracking-[0.16em] ${
+      className={`text-[11px] font-bold uppercase tracking-[0.14em] ${
         breaking ? "text-breaking" : "text-accent"
       }`}
     >
@@ -39,70 +39,51 @@ function Kicker({ category }: { category: string }) {
   );
 }
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
+function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mb-6 flex items-center gap-3 border-b-2 border-ink pb-2">
-      <h2 className="font-serif text-base font-bold uppercase tracking-wide text-ink">
+    <div className="mb-5 flex items-center gap-3">
+      <span className="h-4 w-1.5 bg-accent" aria-hidden />
+      <h2 className="font-display text-lg font-bold tracking-tight text-ink">
         {children}
       </h2>
+      <span className="h-px flex-1 bg-line" />
     </div>
   );
 }
 
-/** ข่าวนำใหญ่ */
-function Lead({ a }: { a: Article }) {
+/** ข่าวเด่น (Hot Issue) — รูปใหญ่ซ้าย + หัวข้อขวา */
+function Hero({ a }: { a: Article }) {
   return (
-    <Link href={`/article/${a.id}`} className="group block">
+    <Link
+      href={`/article/${a.id}`}
+      className="group grid gap-6 md:grid-cols-12 md:gap-8"
+    >
       <NewsImage
         src={a.image_url}
         alt={a.title_th}
         eager
         ratioClassName="aspect-[16/9]"
-        sizes="(max-width: 1024px) 100vw, 680px"
-        className="mb-4"
+        sizes="(max-width: 768px) 100vw, 700px"
+        className="md:col-span-7"
       />
-      <Kicker category={a.category} />
-      <h2 className="mt-2 font-serif text-2xl font-bold leading-tight tracking-tight text-ink transition-colors group-hover:text-accent sm:text-[2rem] sm:leading-[1.12]">
-        {a.title_th}
-      </h2>
-      <p className="mt-3 line-clamp-3 text-[15px] leading-relaxed text-ink-soft">
-        {a.body_th}
-      </p>
-      <time className="mt-3 block text-[11px] uppercase tracking-wide text-ink-soft">
-        {formatThaiDate(a.created_at)}
-      </time>
+      <div className="flex flex-col justify-center md:col-span-5">
+        <Chip category={a.category} />
+        <h1 className="mt-2 font-display text-2xl font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent sm:text-[1.9rem] sm:leading-[1.18]">
+          {a.title_th}
+        </h1>
+        <p className="mt-3 line-clamp-3 text-[15px] leading-relaxed text-ink-soft">
+          {a.body_th}
+        </p>
+        <time className="mt-4 text-[11px] uppercase tracking-wide text-ink-soft">
+          {formatThaiDate(a.created_at)}
+        </time>
+      </div>
     </Link>
   );
 }
 
-/** รายการ "เรื่องเด่น" ข้าง ๆ ข่าวนำ — มี thumbnail เล็ก (ยุบเองถ้าไม่มีรูป) */
-function SideStory({ a }: { a: Article }) {
-  return (
-    <li className="py-4 first:pt-0">
-      <Link href={`/article/${a.id}`} className="group flex items-start gap-3">
-        <div className="min-w-0 flex-1">
-          <Kicker category={a.category} />
-          <h3 className="mt-1 font-serif text-base font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent">
-            {a.title_th}
-          </h3>
-          <time className="mt-1.5 block text-[11px] uppercase tracking-wide text-ink-soft">
-            {formatThaiDate(a.created_at)}
-          </time>
-        </div>
-        <NewsImage
-          src={a.image_url}
-          alt={a.title_th}
-          ratioClassName="aspect-square"
-          sizes="80px"
-          className="w-20 shrink-0"
-        />
-      </Link>
-    </li>
-  );
-}
-
 /** การ์ดในกริดข่าวล่าสุด */
-function StoryCard({ a }: { a: Article }) {
+function Card({ a }: { a: Article }) {
   return (
     <article>
       <Link href={`/article/${a.id}`} className="group block">
@@ -110,21 +91,38 @@ function StoryCard({ a }: { a: Article }) {
           src={a.image_url}
           alt={a.title_th}
           ratioClassName="aspect-[16/10]"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          sizes="(max-width: 640px) 100vw, 360px"
           className="mb-3"
         />
-        <Kicker category={a.category} />
-        <h3 className="mt-1.5 font-serif text-lg font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent">
+        <Chip category={a.category} />
+        <h3 className="mt-1.5 font-display text-base font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent">
           {a.title_th}
         </h3>
-        <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-ink-soft">
-          {a.body_th}
-        </p>
-        <time className="mt-2.5 block text-[11px] uppercase tracking-wide text-ink-soft">
+        <time className="mt-2 block text-[11px] uppercase tracking-wide text-ink-soft">
           {formatThaiDate(a.created_at)}
         </time>
       </Link>
     </article>
+  );
+}
+
+/** รายการ "เรื่องเด่น" แบบมีเลขกำกับ (สไตล์ Most Popular) */
+function RankItem({ a, rank }: { a: Article; rank: number }) {
+  return (
+    <li className="flex gap-4 border-b border-line py-4 last:border-b-0">
+      <span className="font-display text-2xl font-bold leading-none text-accent/35">
+        {String(rank).padStart(2, "0")}
+      </span>
+      <Link href={`/article/${a.id}`} className="group block min-w-0">
+        <Chip category={a.category} />
+        <h3 className="mt-1 font-display text-[15px] font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent">
+          {a.title_th}
+        </h3>
+        <time className="mt-1.5 block text-[11px] uppercase tracking-wide text-ink-soft">
+          {formatThaiDate(a.created_at)}
+        </time>
+      </Link>
+    </li>
   );
 }
 
@@ -133,8 +131,8 @@ export default async function Home() {
 
   if (articles.length === 0) {
     return (
-      <div className="mx-auto max-w-5xl px-5 py-24 text-center">
-        <p className="font-serif text-xl font-bold text-ink">
+      <div className="mx-auto max-w-6xl px-5 py-24 text-center">
+        <p className="font-display text-xl font-bold text-ink">
           ยังไม่มีข่าวเผยแพร่ในขณะนี้
         </p>
         <p className="mt-2 text-sm text-ink-soft">
@@ -144,48 +142,54 @@ export default async function Home() {
     );
   }
 
-  // เลือกข่าวนำเป็นข่าวล่าสุด "ที่มีรูป" เพื่อให้ hero มีภาพเด่นเสมอ
-  // (ถ้าไม่มีข่าวไหนมีรูปเลย ใช้ข่าวล่าสุด) — ที่เหลือเรียงตามวันที่เดิม
   const lead = articles.find((a) => a.image_url) ?? articles[0];
   const others = articles.filter((a) => a.id !== lead.id);
-  const side = others.slice(0, 4);
-  const rest = others.slice(4);
+  const ranked = others.slice(0, 5);
+  const grid = others.slice(5);
 
   return (
-    <div className="mx-auto max-w-5xl px-5 py-8 md:py-10">
-      {/* HERO: ข่าวนำ + เรื่องเด่น */}
+    <div className="mx-auto max-w-6xl px-5 py-8 md:py-10">
+      {/* HOT ISSUE */}
       <section className="border-b border-line pb-10">
-        <div className="grid gap-8 lg:grid-cols-3 lg:gap-10">
-          <div className={side.length > 0 ? "lg:col-span-2" : "lg:col-span-3"}>
-            <Lead a={lead} />
-          </div>
-
-          {side.length > 0 && (
-            <aside className="lg:col-span-1 lg:border-l lg:border-line lg:pl-8">
-              <h2 className="mb-2 border-b-2 border-ink pb-2 font-serif text-base font-bold uppercase tracking-wide text-ink">
-                เรื่องเด่น
-              </h2>
-              <ul className="divide-y divide-line">
-                {side.map((a) => (
-                  <SideStory key={a.id} a={a} />
-                ))}
-              </ul>
-            </aside>
-          )}
-        </div>
+        <SectionHeader>ข่าวเด่น</SectionHeader>
+        <Hero a={lead} />
       </section>
 
-      {/* ข่าวล่าสุด */}
-      {rest.length > 0 && (
-        <section className="mt-10">
-          <SectionLabel>ข่าวล่าสุด</SectionLabel>
-          <div className="grid gap-x-7 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {rest.map((a) => (
-              <StoryCard key={a.id} a={a} />
-            ))}
-          </div>
-        </section>
-      )}
+      {/* MAIN: ข่าวล่าสุด + เรื่องเด่น */}
+      <div className="mt-10 grid gap-10 lg:grid-cols-3 lg:gap-12">
+        <div className="lg:col-span-2">
+          {grid.length > 0 ? (
+            <>
+              <SectionHeader>ข่าวล่าสุด</SectionHeader>
+              <div className="grid gap-x-6 gap-y-9 sm:grid-cols-2">
+                {grid.map((a) => (
+                  <Card key={a.id} a={a} />
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              <SectionHeader>ข่าวล่าสุด</SectionHeader>
+              <div className="grid gap-x-6 gap-y-9 sm:grid-cols-2">
+                {ranked.map((a) => (
+                  <Card key={a.id} a={a} />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        {ranked.length > 0 && (
+          <aside className="lg:col-span-1">
+            <SectionHeader>เรื่องเด่น</SectionHeader>
+            <ul>
+              {ranked.map((a, i) => (
+                <RankItem key={a.id} a={a} rank={i + 1} />
+              ))}
+            </ul>
+          </aside>
+        )}
+      </div>
     </div>
   );
 }

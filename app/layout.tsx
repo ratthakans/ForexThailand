@@ -1,90 +1,91 @@
 import type { Metadata } from "next";
-import { Noto_Serif_Thai, Sarabun } from "next/font/google";
+import { Anuphan, Noto_Sans_Thai } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
-import { formatThaiDate } from "@/lib/format";
 
-const serif = Noto_Serif_Thai({
+const display = Anuphan({
   subsets: ["thai", "latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-noto-serif-thai",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-anuphan",
   display: "swap",
 });
 
-const sans = Sarabun({
+const sans = Noto_Sans_Thai({
   subsets: ["thai", "latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-sarabun",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-noto-thai",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.forexthailand.co"
   ),
   title: {
     default: "Forex Thailand — ข่าวค่าเงิน ทองคำ และเศรษฐกิจ",
     template: "%s — Forex Thailand",
   },
   description:
-    "ข่าวค่าเงิน ทองคำ และเศรษฐกิจ อัปเดตทันสถานการณ์ตลาดเงินไทยและต่างประเทศ",
+    "สำนักข่าวการเงิน รายงานค่าเงิน ทองคำ และเศรษฐกิจ ทันทุกความเคลื่อนไหวตลาดเงินไทยและต่างประเทศ",
 };
 
-const NAV = ["ค่าเงิน", "ทองคำ", "เศรษฐกิจ", "หุ้น", "คริปโต"];
+const NAV = [
+  { label: "หน้าแรก", href: "/", active: true },
+  { label: "ค่าเงิน", href: "/" },
+  { label: "ทองคำ", href: "/" },
+  { label: "หุ้น", href: "/" },
+  { label: "คริปโต", href: "/" },
+  { label: "เศรษฐกิจ", href: "/" },
+];
+
+function Wordmark({ light = false }: { light?: boolean }) {
+  return (
+    <span className="inline-flex items-center gap-2">
+      <span
+        className={`font-display text-xl font-bold tracking-tight sm:text-2xl ${
+          light ? "text-white" : "text-ink"
+        }`}
+      >
+        Forex Thailand
+      </span>
+      <span className="rounded bg-accent px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
+        Wealth
+      </span>
+    </span>
+  );
+}
 
 function SiteHeader() {
   return (
     <header>
-      {/* แถบบนสุด */}
-      <div className="border-b border-line">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-2 text-[11px] tracking-wide text-ink-soft">
-          <span>{formatThaiDate(new Date())}</span>
-          <span className="hidden sm:block">
-            ข่าวค่าเงิน · ทองคำ · เศรษฐกิจ
-          </span>
+      {/* มาสต์เฮดดำ */}
+      <div className="bg-ink">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+          <Link href="/" className="block">
+            <Wordmark light />
+            <span className="mt-1 block text-[11px] tracking-wide text-white/55">
+              สำนักข่าวค่าเงิน ทองคำ และการลงทุน
+            </span>
+          </Link>
         </div>
       </div>
 
-      {/* มาสต์เฮด: wordmark serif แบบหนังสือพิมพ์ */}
-      <div className="mx-auto max-w-5xl px-5 py-8 text-center sm:py-10">
-        <Link
-          href="/"
-          className="inline-block transition-opacity hover:opacity-70"
-        >
-          <span className="font-serif text-[2.1rem] font-bold leading-none tracking-tight text-ink sm:text-[3rem]">
-            Forex Thailand
-          </span>
-        </Link>
-        <p className="mt-3 font-serif text-[13px] italic text-ink-soft sm:text-sm">
-          ข่าวค่าเงิน ทองคำ และเศรษฐกิจ
-        </p>
-      </div>
-
-      {/* แถบหมวด (sticky) เส้นคู่แบบหนังสือพิมพ์ */}
-      <nav className="sticky top-0 z-30 border-y-[3px] border-double border-ink bg-paper/95 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-5">
-          <Link
-            href="/"
-            className="shrink-0 py-2.5 font-serif text-sm font-bold tracking-tight text-ink"
-          >
-            Forex Thailand
-          </Link>
-          <div className="flex items-center gap-1 overflow-x-auto">
+      {/* แถบเมนู (sticky) */}
+      <nav className="sticky top-0 z-30 border-b border-line bg-white/95 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center gap-1 overflow-x-auto px-5">
+          {NAV.map((n) => (
             <Link
-              href="/"
-              className="shrink-0 px-2.5 py-3 text-[12px] font-semibold uppercase tracking-wide text-ink hover:text-accent"
+              key={n.label}
+              href={n.href}
+              className={`shrink-0 border-b-2 px-3 py-3 text-[13px] font-semibold tracking-wide transition-colors ${
+                n.active
+                  ? "border-accent text-ink"
+                  : "border-transparent text-ink-soft hover:text-ink"
+              }`}
             >
-              หน้าแรก
+              {n.label}
             </Link>
-            {NAV.map((c) => (
-              <span
-                key={c}
-                className="shrink-0 px-2.5 py-3 text-[12px] font-medium uppercase tracking-wide text-ink-soft"
-              >
-                {c}
-              </span>
-            ))}
-          </div>
+          ))}
         </div>
       </nav>
     </header>
@@ -92,38 +93,35 @@ function SiteHeader() {
 }
 
 function SiteFooter() {
+  const cats = ["ค่าเงิน", "ทองคำ", "หุ้น", "คริปโต", "เศรษฐกิจ"];
   return (
-    <footer className="mt-20 border-t-[3px] border-double border-ink">
-      <div className="mx-auto max-w-5xl px-5 py-12">
+    <footer className="mt-20 bg-ink text-white">
+      <div className="mx-auto max-w-6xl px-5 py-12">
         <div className="grid gap-10 md:grid-cols-[1.7fr_1fr_1fr]">
           <div>
-            <Link
-              href="/"
-              className="font-serif text-2xl font-bold tracking-tight text-ink"
-            >
-              Forex Thailand
-            </Link>
-            <p className="mt-3 max-w-sm text-sm leading-relaxed text-ink-soft">
+            <Wordmark light />
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
               สำนักข่าวการเงิน รายงานความเคลื่อนไหวค่าเงิน ทองคำ
               และเศรษฐกิจไทยและต่างประเทศ อย่างกระชับ ทันสถานการณ์
-              และเป็นกลาง
             </p>
           </div>
-
           <div>
-            <h3 className="font-serif text-sm font-bold text-ink">หมวดข่าว</h3>
-            <ul className="mt-4 space-y-2.5 text-sm text-ink-soft">
-              {NAV.map((c) => (
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/50">
+              หมวดข่าว
+            </h3>
+            <ul className="mt-4 space-y-2.5 text-sm text-white/80">
+              {cats.map((c) => (
                 <li key={c}>{c}</li>
               ))}
             </ul>
           </div>
-
           <div>
-            <h3 className="font-serif text-sm font-bold text-ink">เกี่ยวกับ</h3>
-            <ul className="mt-4 space-y-2.5 text-sm text-ink-soft">
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/50">
+              เกี่ยวกับ
+            </h3>
+            <ul className="mt-4 space-y-2.5 text-sm text-white/80">
               <li>
-                <Link href="/" className="hover:text-accent">
+                <Link href="/" className="hover:text-white">
                   หน้าแรก
                 </Link>
               </li>
@@ -132,8 +130,7 @@ function SiteFooter() {
             </ul>
           </div>
         </div>
-
-        <div className="mt-10 flex flex-col gap-2 border-t border-line pt-6 text-[11px] text-ink-soft sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-2 border-t border-white/15 pt-6 text-[11px] text-white/50 sm:flex-row sm:items-center sm:justify-between">
           <span>© {new Date().getFullYear()} Forex Thailand</span>
           <span>
             เนื้อหาเพื่อการศึกษาและติดตามข่าวสารเท่านั้น ไม่ใช่คำแนะนำการลงทุน
@@ -152,9 +149,9 @@ export default function RootLayout({
   return (
     <html
       lang="th"
-      className={`${serif.variable} ${sans.variable} h-full antialiased`}
+      className={`${display.variable} ${sans.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-paper text-ink">
+      <body className="flex min-h-full flex-col bg-white text-ink">
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />
