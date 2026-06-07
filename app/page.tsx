@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { query, type Article } from "@/lib/db";
 import { categoryLabel, formatThaiDate } from "@/lib/format";
+import { PROMOS, getBroker } from "@/lib/brokers";
 import { NewsImage } from "@/components/NewsImage";
+import { BrokerLogo } from "@/components/BrokerLogo";
 import TradingViewForex from "@/components/TradingViewForex";
 import EconomicCalendar from "@/components/EconomicCalendar";
 import { LiveStream } from "@/components/LiveStream";
@@ -217,6 +219,57 @@ export default async function Home() {
           )}
         </aside>
       </div>
+
+      {/* โปรโมชันโบรกเกอร์แนะนำ */}
+      <section className="mt-12">
+        <SectionHeader>โปรโมชันแนะนำ</SectionHeader>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {PROMOS.map((p) => {
+            const b = getBroker(p.brokerSlug);
+            if (!b) return null;
+            return (
+              <Link
+                key={p.brokerSlug}
+                href={`/brokers/${b.slug}`}
+                className="group flex flex-col rounded-xl border border-line bg-white p-5 transition-colors hover:border-accent"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <BrokerLogo domain={b.domain} name={b.name} size={40} />
+                    <div>
+                      <h3 className="font-display text-base font-bold leading-tight text-ink">
+                        {b.name}
+                      </h3>
+                      <span className="text-[12px] tracking-wide text-accent">
+                        {"★".repeat(b.rating)}
+                        <span className="text-[#d8d4c4]">
+                          {"★".repeat(5 - b.rating)}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                  <span className="bg-gold rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-black">
+                    {p.badge}
+                  </span>
+                </div>
+                <p className="mt-4 font-display text-[15px] font-bold leading-snug text-ink group-hover:text-accent">
+                  {p.title}
+                </p>
+                <p className="mt-1.5 flex-1 text-[13px] leading-relaxed text-ink-soft">
+                  {p.desc}
+                </p>
+                <span className="mt-4 text-xs font-semibold text-accent">
+                  ดูรีวิวเต็ม →
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+        <p className="mt-3 text-[11px] text-ink-soft">
+          * โปรโมชันและเงื่อนไขอาจเปลี่ยนแปลง โปรดตรวจสอบล่าสุดที่เว็บไซต์โบรกเกอร์ ·
+          การเทรดมีความเสี่ยง
+        </p>
+      </section>
 
       {/* ปฏิทินเศรษฐกิจโลก — เหตุการณ์ที่ขับเคลื่อนตลาด */}
       <section className="mt-12">

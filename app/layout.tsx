@@ -1,13 +1,22 @@
 import type { Metadata } from "next";
-import { Anuphan, Noto_Sans_Thai } from "next/font/google";
+import { Newsreader, Noto_Serif_Thai, Noto_Sans_Thai } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import MarketTicker from "@/components/MarketTicker";
 
-const display = Anuphan({
-  subsets: ["thai", "latin"],
+// Newsreader (Latin) คู่กับ Noto Serif Thai (ไทย) — หัวข้อ/wordmark สไตล์ editorial
+const newsreader = Newsreader({
+  subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-anuphan",
+  style: ["normal", "italic"],
+  variable: "--font-newsreader",
+  display: "swap",
+});
+
+const serifThai = Noto_Serif_Thai({
+  subsets: ["thai", "latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-serif-thai",
   display: "swap",
 });
 
@@ -43,7 +52,7 @@ function Wordmark({ light = false }: { light?: boolean }) {
   return (
     <span
       className={`font-display text-xl font-bold tracking-tight sm:text-2xl ${
-        light ? "text-gold-grad" : "text-ink"
+        light ? "text-white" : "text-ink"
       }`}
     >
       Forex Thailand
@@ -152,7 +161,7 @@ export default function RootLayout({
   return (
     <html
       lang="th"
-      className={`${display.variable} ${sans.variable} h-full antialiased`}
+      className={`${newsreader.variable} ${serifThai.variable} ${sans.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-white text-ink">
         <SiteHeader />

@@ -84,6 +84,35 @@ export function getBroker(slug: string): Broker | undefined {
   return BROKERS.find((b) => b.slug === slug);
 }
 
+/** โปรโมชัน/จุดเด่นแนะนำของโบรกเกอร์ (ตัวอย่าง — ตรวจสอบเงื่อนไขล่าสุดที่เว็บโบรกเกอร์) */
+export type Promo = {
+  brokerSlug: string;
+  badge: string;
+  title: string;
+  desc: string;
+};
+
+export const PROMOS: Promo[] = [
+  {
+    brokerSlug: "exness",
+    badge: "ยอดนิยม",
+    title: "ฝาก-ถอนอัตโนมัติ 24/7 · สเปรดเริ่ม 0.0",
+    desc: "บัญชี Zero/Raw เลเวอเรจไม่จำกัด เปิดบัญชีไม่กี่นาที ถอนเงินไวที่สุดในตลาด",
+  },
+  {
+    brokerSlug: "xm",
+    badge: "เหมาะมือใหม่",
+    title: "เริ่มต้นบัญชี Micro เพียง $5",
+    desc: "ซัพพอร์ตภาษาไทย พร้อมคอนเทนต์สอนเทรดและสัมมนา เหมาะผู้เริ่มต้น",
+  },
+  {
+    brokerSlug: "pepperstone",
+    badge: "สเปรดต่ำ",
+    title: "A-book แท้ ส่งคำสั่งไว ไม่รีโควต",
+    desc: "บัญชี Razor สเปรดต่ำมาก กำกับดูแล Tier-1 หลายใบ เหมาะสาย Scalping/EA",
+  },
+];
+
 /** คะแนนประกอบแบบหลายมิติ (อิงเรตติ้ง + กระจายแบบคงที่ต่อ broker) */
 export type BrokerScores = {
   overall: number;
