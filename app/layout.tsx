@@ -1,22 +1,14 @@
 import type { Metadata } from "next";
-import { Newsreader, Noto_Serif_Thai, Noto_Sans_Thai } from "next/font/google";
+import { Anuphan, Newsreader, Noto_Sans_Thai } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import MarketTicker from "@/components/MarketTicker";
 
-// Newsreader (Latin) คู่กับ Noto Serif Thai (ไทย) — หัวข้อ/wordmark สไตล์ editorial
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-newsreader",
-  display: "swap",
-});
-
-const serifThai = Noto_Serif_Thai({
+// Anuphan = หัวข้อทั่วไป, Noto Sans Thai = เนื้อหา (เหมือนเดิม)
+const display = Anuphan({
   subsets: ["thai", "latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-serif-thai",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-anuphan",
   display: "swap",
 });
 
@@ -24,6 +16,14 @@ const sans = Noto_Sans_Thai({
   subsets: ["thai", "latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-noto-thai",
+  display: "swap",
+});
+
+// Newsreader = ใช้เฉพาะโลโก้ "Forex Thailand" เท่านั้น
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-newsreader",
   display: "swap",
 });
 
@@ -51,7 +51,7 @@ const NAV = [
 function Wordmark({ light = false }: { light?: boolean }) {
   return (
     <span
-      className={`font-display text-xl font-bold tracking-tight sm:text-2xl ${
+      className={`font-logo text-xl font-bold tracking-tight sm:text-2xl ${
         light ? "text-white" : "text-ink"
       }`}
     >
@@ -161,7 +161,7 @@ export default function RootLayout({
   return (
     <html
       lang="th"
-      className={`${newsreader.variable} ${serifThai.variable} ${sans.variable} h-full antialiased`}
+      className={`${display.variable} ${newsreader.variable} ${sans.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-white text-ink">
         <SiteHeader />

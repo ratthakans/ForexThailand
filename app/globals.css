@@ -20,8 +20,9 @@
   --color-surface: var(--surface);
   --color-accent: var(--accent);
   --color-breaking: var(--breaking);
-  --font-display: var(--font-newsreader), var(--font-serif-thai);
+  --font-display: var(--font-anuphan);
   --font-sans: var(--font-noto-thai);
+  --font-logo: var(--font-newsreader);
 }
 
 body {

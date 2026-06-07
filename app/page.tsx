@@ -40,14 +40,24 @@ function Chip({ category }: { category: string }) {
   );
 }
 
-function SectionHeader({ children }: { children: React.ReactNode }) {
+function SectionHeader({
+  children,
+  dark = false,
+}: {
+  children: React.ReactNode;
+  dark?: boolean;
+}) {
   return (
     <div className="mb-5 flex items-center gap-3">
       <span className="bg-gold h-4 w-1.5 rounded-full" aria-hidden />
-      <h2 className="font-display text-lg font-bold tracking-tight text-ink">
+      <h2
+        className={`font-display text-lg font-bold tracking-tight ${
+          dark ? "text-white" : "text-ink"
+        }`}
+      >
         {children}
       </h2>
-      <span className="h-px flex-1 bg-line" />
+      <span className={`h-px flex-1 ${dark ? "bg-white/15" : "bg-line"}`} />
     </div>
   );
 }
@@ -148,136 +158,139 @@ export default async function Home() {
   const ranked = others.slice(0, 5);
   const grid = others.slice(5);
 
+  const latest = grid.length > 0 ? grid : ranked;
+
   return (
-    <div className="mx-auto max-w-6xl px-5 py-8 md:py-10">
-      {/* HOT ISSUE */}
-      <section className="border-b border-line pb-10">
-        <SectionHeader>ข่าวเด่น</SectionHeader>
-        <Hero a={lead} />
+    <>
+      {/* ข่าวเด่น — พื้นขาว */}
+      <section className="bg-bg">
+        <div className="mx-auto max-w-6xl px-5 py-10 md:py-12">
+          <SectionHeader>ข่าวเด่น</SectionHeader>
+          <Hero a={lead} />
+        </div>
       </section>
 
-      {/* ถ่ายทอดสด */}
-      <section className="mt-10">
-        <div className="mb-5 flex items-center gap-3">
-          <span className="flex items-center gap-1.5 rounded bg-breaking px-2 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
-            LIVE
-          </span>
-          <h2 className="font-display text-lg font-bold tracking-tight text-ink">
-            ถ่ายทอดสด
-          </h2>
-          <span className="h-px flex-1 bg-line" />
+      {/* ถ่ายทอดสด — พื้นดำ */}
+      <section className="bg-ink">
+        <div className="mx-auto max-w-6xl px-5 py-10 md:py-12">
+          <div className="mb-5 flex items-center gap-3">
+            <span className="flex items-center gap-1.5 rounded bg-breaking px-2 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+              LIVE
+            </span>
+            <h2 className="font-display text-lg font-bold tracking-tight text-white">
+              ถ่ายทอดสด
+            </h2>
+            <span className="h-px flex-1 bg-white/15" />
+          </div>
+          <div className="mx-auto max-w-3xl">
+            <LiveStream videoId="iEpJwprxDdk" />
+            <p className="mt-2 text-center text-xs text-white/50">
+              ติดตามความเคลื่อนไหวตลาดแบบเรียลไทม์
+            </p>
+          </div>
         </div>
-        <div className="mx-auto max-w-3xl">
-          <LiveStream videoId="iEpJwprxDdk" />
-          <p className="mt-2 text-center text-xs text-ink-soft">
-            ติดตามความเคลื่อนไหวตลาดแบบเรียลไทม์
+      </section>
+
+      {/* ข่าวล่าสุด + แถบข้าง — พื้นขาว */}
+      <section className="bg-bg">
+        <div className="mx-auto max-w-6xl px-5 py-10 md:py-12">
+          <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
+            <div className="lg:col-span-2">
+              <SectionHeader>ข่าวล่าสุด</SectionHeader>
+              <div className="grid gap-x-6 gap-y-9 sm:grid-cols-2">
+                {latest.map((a) => (
+                  <Card key={a.id} a={a} />
+                ))}
+              </div>
+            </div>
+
+            <aside className="lg:col-span-1">
+              <SectionHeader>อัตราแลกเปลี่ยน</SectionHeader>
+              <div className="overflow-hidden rounded-xl border border-line bg-ink p-1">
+                <TradingViewForex />
+              </div>
+
+              {ranked.length > 0 && (
+                <div className="mt-8">
+                  <SectionHeader>เรื่องเด่น</SectionHeader>
+                  <ul>
+                    {ranked.map((a, i) => (
+                      <RankItem key={a.id} a={a} rank={i + 1} />
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      {/* โปรโมชันแนะนำ — พื้นดำ */}
+      <section className="bg-ink">
+        <div className="mx-auto max-w-6xl px-5 py-10 md:py-12">
+          <SectionHeader dark>โปรโมชันโบรกเกอร์แนะนำ</SectionHeader>
+          <p className="-mt-2 mb-6 text-sm text-white/55">
+            จุดเด่นและข้อเสนอจากโบรกเกอร์ที่เราคัดมาแนะนำ
+          </p>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {PROMOS.map((p) => {
+              const b = getBroker(p.brokerSlug);
+              if (!b) return null;
+              return (
+                <Link
+                  key={p.brokerSlug}
+                  href={`/brokers/${b.slug}`}
+                  className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition-all hover:border-accent hover:bg-white/[0.07]"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <BrokerLogo domain={b.domain} name={b.name} size={44} />
+                      <div>
+                        <h3 className="font-display text-lg font-bold leading-tight text-white">
+                          {b.name}
+                        </h3>
+                        <span className="text-[12px] tracking-wide text-accent">
+                          {"★".repeat(b.rating)}
+                          <span className="text-white/20">
+                            {"★".repeat(5 - b.rating)}
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                    <span className="bg-gold rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-black">
+                      {p.badge}
+                    </span>
+                  </div>
+                  <p className="mt-5 font-display text-xl font-bold leading-snug text-white">
+                    {p.title}
+                  </p>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-white/55">
+                    {p.desc}
+                  </p>
+                  <span className="bg-gold mt-6 inline-flex w-fit items-center gap-1 rounded-lg px-4 py-2 text-sm font-bold text-black transition-transform group-hover:translate-x-0.5">
+                    ดูรีวิวโบรกเกอร์ →
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+          <p className="mt-5 text-[11px] text-white/40">
+            * โปรโมชันและเงื่อนไขอาจเปลี่ยนแปลง โปรดตรวจสอบล่าสุดที่เว็บไซต์โบรกเกอร์ ·
+            การเทรดมีความเสี่ยง
           </p>
         </div>
       </section>
 
-      {/* MAIN: ข่าวล่าสุด + เรื่องเด่น */}
-      <div className="mt-10 grid gap-10 lg:grid-cols-3 lg:gap-12">
-        <div className="lg:col-span-2">
-          {grid.length > 0 ? (
-            <>
-              <SectionHeader>ข่าวล่าสุด</SectionHeader>
-              <div className="grid gap-x-6 gap-y-9 sm:grid-cols-2">
-                {grid.map((a) => (
-                  <Card key={a.id} a={a} />
-                ))}
-              </div>
-            </>
-          ) : (
-            <>
-              <SectionHeader>ข่าวล่าสุด</SectionHeader>
-              <div className="grid gap-x-6 gap-y-9 sm:grid-cols-2">
-                {ranked.map((a) => (
-                  <Card key={a.id} a={a} />
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-
-        <aside className="lg:col-span-1">
-          {/* อัตราแลกเปลี่ยนเรียลไทม์ (TradingView) */}
-          <SectionHeader>อัตราแลกเปลี่ยน</SectionHeader>
-          <div className="overflow-hidden rounded-xl border border-line bg-ink p-1">
-            <TradingViewForex />
+      {/* ปฏิทินเศรษฐกิจ — พื้นขาว */}
+      <section className="bg-bg">
+        <div className="mx-auto max-w-6xl px-5 py-10 md:py-12">
+          <SectionHeader>ปฏิทินเศรษฐกิจ</SectionHeader>
+          <div className="overflow-hidden rounded-xl border border-line">
+            <EconomicCalendar />
           </div>
-
-          {ranked.length > 0 && (
-            <div className="mt-8">
-              <SectionHeader>เรื่องเด่น</SectionHeader>
-              <ul>
-                {ranked.map((a, i) => (
-                  <RankItem key={a.id} a={a} rank={i + 1} />
-                ))}
-              </ul>
-            </div>
-          )}
-        </aside>
-      </div>
-
-      {/* โปรโมชันโบรกเกอร์แนะนำ */}
-      <section className="mt-12">
-        <SectionHeader>โปรโมชันแนะนำ</SectionHeader>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {PROMOS.map((p) => {
-            const b = getBroker(p.brokerSlug);
-            if (!b) return null;
-            return (
-              <Link
-                key={p.brokerSlug}
-                href={`/brokers/${b.slug}`}
-                className="group flex flex-col rounded-xl border border-line bg-white p-5 transition-colors hover:border-accent"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <BrokerLogo domain={b.domain} name={b.name} size={40} />
-                    <div>
-                      <h3 className="font-display text-base font-bold leading-tight text-ink">
-                        {b.name}
-                      </h3>
-                      <span className="text-[12px] tracking-wide text-accent">
-                        {"★".repeat(b.rating)}
-                        <span className="text-[#d8d4c4]">
-                          {"★".repeat(5 - b.rating)}
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-                  <span className="bg-gold rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-black">
-                    {p.badge}
-                  </span>
-                </div>
-                <p className="mt-4 font-display text-[15px] font-bold leading-snug text-ink group-hover:text-accent">
-                  {p.title}
-                </p>
-                <p className="mt-1.5 flex-1 text-[13px] leading-relaxed text-ink-soft">
-                  {p.desc}
-                </p>
-                <span className="mt-4 text-xs font-semibold text-accent">
-                  ดูรีวิวเต็ม →
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-        <p className="mt-3 text-[11px] text-ink-soft">
-          * โปรโมชันและเงื่อนไขอาจเปลี่ยนแปลง โปรดตรวจสอบล่าสุดที่เว็บไซต์โบรกเกอร์ ·
-          การเทรดมีความเสี่ยง
-        </p>
-      </section>
-
-      {/* ปฏิทินเศรษฐกิจโลก — เหตุการณ์ที่ขับเคลื่อนตลาด */}
-      <section className="mt-12">
-        <SectionHeader>ปฏิทินเศรษฐกิจ</SectionHeader>
-        <div className="overflow-hidden rounded-xl border border-line">
-          <EconomicCalendar />
         </div>
       </section>
-    </div>
+    </>
   );
 }
