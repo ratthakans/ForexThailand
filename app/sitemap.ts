@@ -16,7 +16,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const { rows } = await query<{ id: number; created_at: Date }>(
       `SELECT id, created_at
          FROM articles
-        WHERE status IN ('approved', 'posted')
+        WHERE coalesce(status, '') <> 'rejected'
+          AND trim(coalesce(title_th, '')) <> ''
         ORDER BY created_at DESC
         LIMIT 1000`
     );

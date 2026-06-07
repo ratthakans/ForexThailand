@@ -33,7 +33,7 @@ const getArticle = cache(async (idRaw: string): Promise<Article | null> => {
               hook, author
          FROM articles
         WHERE id = $1
-          AND status IN ('approved', 'posted')
+          AND coalesce(status, '') <> 'rejected'
           AND trim(coalesce(title_th, '')) <> ''
         LIMIT 1`,
       [id]

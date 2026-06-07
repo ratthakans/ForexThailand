@@ -16,7 +16,7 @@ async function getArticles(): Promise<Article[]> {
               image_credit, category, status, fb_post_id, created_at,
               hook, author
          FROM articles
-        WHERE status IN ('approved', 'posted')
+        WHERE coalesce(status, '') <> 'rejected'
           AND trim(coalesce(title_th, '')) <> ''
         ORDER BY created_at DESC`
     );
