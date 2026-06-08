@@ -66,7 +66,7 @@ function MarketOverview() {
       support_host: "https://www.tradingview.com",
       backgroundColor: "#0f0f0f",
       width: "100%",
-      height: 550,
+      height: 600,
       showSymbolLogo: true,
       showChart: true,
     });

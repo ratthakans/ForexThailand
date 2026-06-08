@@ -8,7 +8,6 @@ import { HeroCarousel } from "@/components/HeroCarousel";
 import { NewsSlider } from "@/components/NewsSlider";
 import { PromoCarousel, type PromoSlide } from "@/components/PromoCarousel";
 import { BrokerLogo } from "@/components/BrokerLogo";
-import TradingViewForex from "@/components/TradingViewForex";
 import MarketOverview from "@/components/MarketOverview";
 import EconomicCalendar from "@/components/EconomicCalendar";
 import { LiveStream } from "@/components/LiveStream";
@@ -119,49 +118,52 @@ export default async function Home() {
       {/* ฮีโร่สไลด์ — เต็มความกว้าง (full-bleed) */}
       <HeroCarousel items={heroItems.length > 0 ? heroItems : newsItems.slice(0, 6)} />
 
-      {/* ข่าวล่าสุด 2 แถว (เลื่อนแนวนอน) + แท็บ — พื้นเทาอ่อน */}
-      <section className="bg-surface">
+      {/* ข่าวล่าสุด 2 แถว — พื้นขาว */}
+      <section className="bg-bg">
         <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
           <SectionHeader>ข่าวล่าสุด</SectionHeader>
           <NewsSlider articles={newsItems} tabs={tabs} />
         </div>
       </section>
 
-      {/* ตลาด & ถ่ายทอดสด — พื้นดำ */}
+      {/* ภาพรวมตลาด (เต็มความกว้าง) — พื้นดำ */}
       <section className="bg-ink">
         <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
-          <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
-            <div className="lg:col-span-7">
-              <div className="mb-6 flex items-center gap-3">
-                <span className="flex items-center gap-1.5 rounded bg-breaking px-2 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
-                  LIVE
-                </span>
-                <h2 className="font-display text-lg font-bold tracking-tight text-white">
-                  ถ่ายทอดสด
-                </h2>
-                <span className="h-px flex-1 bg-white/15" />
-              </div>
-              <LiveStream videoId="iEpJwprxDdk" />
-            </div>
-            <div className="lg:col-span-5">
-              <SectionHeader dark>ภาพรวมตลาด</SectionHeader>
-              <div className="overflow-hidden rounded-xl border border-white/10 bg-[#0f0f0f]">
-                <MarketOverview />
-              </div>
-            </div>
+          <SectionHeader dark>ภาพรวมตลาด</SectionHeader>
+          <div className="overflow-hidden rounded-xl border border-white/10 bg-[#0f0f0f]">
+            <MarketOverview />
           </div>
         </div>
       </section>
 
-      {/* รีวิวโบรกเกอร์ & โปรโมชัน — พื้นขาว */}
+      {/* ถ่ายทอดสด (เต็มความกว้าง) — พื้นขาว */}
       <section className="bg-bg">
         <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
-          <SectionHeader>รีวิวโบรกเกอร์ &amp; โปรโมชัน</SectionHeader>
+          <div className="mb-6 flex items-center gap-3">
+            <span className="flex items-center gap-1.5 rounded bg-breaking px-2 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+              LIVE
+            </span>
+            <h2 className="font-display text-lg font-bold tracking-tight text-ink">
+              ถ่ายทอดสด
+            </h2>
+            <span className="h-px flex-1 bg-line" />
+          </div>
+          <LiveStream videoId="iEpJwprxDdk" />
+          <p className="mt-3 text-center text-xs text-ink-soft">
+            ติดตามความเคลื่อนไหวตลาดแบบเรียลไทม์
+          </p>
+        </div>
+      </section>
+
+      {/* รีวิวโบรกเกอร์ & โปรโมชัน — พื้นดำ */}
+      <section className="bg-ink">
+        <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
+          <SectionHeader dark>รีวิวโบรกเกอร์ &amp; โปรโมชัน</SectionHeader>
           <PromoCarousel slides={promoSlides} />
 
           <div className="mt-8 flex items-center justify-between gap-4">
-            <h3 className="font-display text-base font-bold text-ink">
+            <h3 className="font-display text-base font-bold text-white">
               โบรกเกอร์ยอดนิยม
             </h3>
             <Link
@@ -176,43 +178,32 @@ export default async function Home() {
               <Link
                 key={b.slug}
                 href={`/brokers/${b.slug}`}
-                className="group flex flex-col items-center gap-2 rounded-xl border border-line bg-white p-4 text-center transition-all hover:-translate-y-1 hover:border-accent hover:shadow-md"
+                className="group flex flex-col items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] p-4 text-center transition-all hover:-translate-y-1 hover:border-accent hover:bg-white/[0.07]"
               >
                 <BrokerLogo domain={b.domain} name={b.name} size={48} />
-                <span className="font-display text-sm font-bold leading-tight text-ink group-hover:text-accent">
+                <span className="font-display text-sm font-bold leading-tight text-white">
                   {b.name}
                 </span>
                 <span className="text-[12px] tracking-wide text-accent">
                   {"★".repeat(b.rating)}
-                  <span className="text-[#d8d4c4]">
-                    {"★".repeat(5 - b.rating)}
-                  </span>
+                  <span className="text-white/20">{"★".repeat(5 - b.rating)}</span>
                 </span>
               </Link>
             ))}
           </div>
-          <p className="mt-4 text-[11px] text-ink-soft">
+          <p className="mt-4 text-[11px] text-white/40">
             * โปรโมชันและเงื่อนไขอาจเปลี่ยนแปลง โปรดตรวจสอบล่าสุดที่เว็บไซต์โบรกเกอร์ ·
             การเทรดมีความเสี่ยง
           </p>
         </div>
       </section>
 
-      {/* ตลาด & ปฏิทินเศรษฐกิจ — พื้นเทาอ่อน */}
-      <section className="bg-surface">
+      {/* ปฏิทินเศรษฐกิจ — พื้นขาว */}
+      <section className="bg-bg">
         <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
-          <SectionHeader>ตลาด &amp; ปฏิทินเศรษฐกิจ</SectionHeader>
-          <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
-            <div className="lg:col-span-8">
-              <div className="overflow-hidden rounded-xl border border-line bg-white">
-                <EconomicCalendar />
-              </div>
-            </div>
-            <div className="lg:col-span-4">
-              <div className="overflow-hidden rounded-xl border border-line bg-ink p-1">
-                <TradingViewForex />
-              </div>
-            </div>
+          <SectionHeader>ปฏิทินเศรษฐกิจ</SectionHeader>
+          <div className="overflow-hidden rounded-xl border border-line bg-white">
+            <EconomicCalendar />
           </div>
         </div>
       </section>
