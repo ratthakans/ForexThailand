@@ -3,6 +3,12 @@ import { Anuphan, Newsreader, Noto_Sans_Thai } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import MarketTicker from "@/components/MarketTicker";
+import { SiteNav, type NavItem } from "@/components/SiteNav";
+import { JsonLd } from "@/components/JsonLd";
+import { TOPICS } from "@/lib/topics";
+
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.forexthailand.co";
 
 // Anuphan = หัวข้อทั่วไป, Noto Sans Thai = เนื้อหา (เหมือนเดิม)
 const display = Anuphan({
@@ -39,12 +45,12 @@ export const metadata: Metadata = {
     "สำนักข่าวการเงิน รายงานค่าเงิน ทองคำ และเศรษฐกิจ ทันทุกความเคลื่อนไหวตลาดเงินไทยและต่างประเทศ",
 };
 
-const NAV = [
-  { label: "หน้าแรก", href: "/", active: true },
-  { label: "ค่าเงิน", href: "/" },
-  { label: "ทองคำ", href: "/" },
-  { label: "หุ้น", href: "/" },
-  { label: "คริปโต", href: "/" },
+const NAV: NavItem[] = [
+  { label: "หน้าแรก", href: "/" },
+  ...TOPICS.slice(0, 4).map((t) => ({
+    label: t.label,
+    href: `/topic/${t.slug}`,
+  })),
   { label: "รีวิวโบรกเกอร์", href: "/brokers" },
 ];
 
@@ -82,24 +88,8 @@ function SiteHeader() {
         </div>
       </div>
 
-      {/* แถบเมนู (sticky) */}
-      <nav className="sticky top-0 z-30 border-b border-line bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-[1440px] items-center gap-1 overflow-x-auto px-5">
-          {NAV.map((n) => (
-            <Link
-              key={n.label}
-              href={n.href}
-              className={`shrink-0 border-b-2 px-3 py-3 text-[13px] font-semibold tracking-wide transition-colors ${
-                n.active
-                  ? "border-accent text-ink"
-                  : "border-transparent text-ink-soft hover:text-ink"
-              }`}
-            >
-              {n.label}
-            </Link>
-          ))}
-        </div>
-      </nav>
+      {/* แถบเมนู (sticky) — active ตาม path ปัจจุบัน */}
+      <SiteNav items={NAV} />
     </header>
   );
 }
@@ -164,6 +154,27 @@ export default function RootLayout({
       className={`${display.variable} ${newsreader.variable} ${sans.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-white text-ink">
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "NewsMediaOrganization",
+            name: "Forex Thailand",
+            url: SITE_URL,
+            logo: `${SITE_URL}/icon`,
+            description:
+              "สำนักข่าวการเงิน รายงานค่าเงิน ทองคำ และเศรษฐกิจ ทันทุกความเคลื่อนไหวตลาดเงินไทยและต่างประเทศ",
+            inLanguage: "th-TH",
+          }}
+        />
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Forex Thailand",
+            url: SITE_URL,
+            inLanguage: "th-TH",
+          }}
+        />
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />

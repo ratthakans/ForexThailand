@@ -10,6 +10,10 @@ import {
   truncate,
 } from "@/lib/format";
 import { NewsImage } from "@/components/NewsImage";
+import { JsonLd } from "@/components/JsonLd";
+
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.forexthailand.co";
 
 export const revalidate = 60;
 
@@ -100,8 +104,48 @@ export default async function ArticlePage({ params }: PageProps) {
 
   const paragraphs = toParagraphs(article.body_th);
 
+  const description = article.hook?.trim()
+    ? article.hook.trim()
+    : truncate(article.body_th, 150);
+  const url = `${SITE_URL}/article/${article.id}`;
+  const newsLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: article.title_th,
+    description,
+    image: article.image_url ? [article.image_url] : [`${SITE_URL}/og-default`],
+    datePublished: article.created_at.toISOString(),
+    dateModified: article.created_at.toISOString(),
+    inLanguage: "th-TH",
+    author: {
+      "@type": article.author ? "Person" : "Organization",
+      name: article.author || "Forex Thailand",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Forex Thailand",
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/icon` },
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+  };
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "หน้าแรก", item: `${SITE_URL}/` },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: categoryLabel(article.category),
+        item: url,
+      },
+    ],
+  };
+
   return (
     <article className="mx-auto max-w-2xl px-5 py-8 md:py-12">
+      <JsonLd data={newsLd} />
+      <JsonLd data={breadcrumbLd} />
       {/* breadcrumb */}
       <nav className="mb-5 text-[11px] uppercase tracking-[0.14em] text-ink-soft">
         <Link href="/" className="hover:text-ink">
