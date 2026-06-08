@@ -95,7 +95,6 @@ function SiteHeader() {
 }
 
 function SiteFooter() {
-  const cats = ["ค่าเงิน", "ทองคำ", "หุ้น", "คริปโต", "เศรษฐกิจ"];
   return (
     <footer className="mt-20 bg-ink text-white">
       <div className="mx-auto max-w-[1440px] px-5 lg:px-8 py-12">
@@ -112,8 +111,12 @@ function SiteFooter() {
               หมวดข่าว
             </h3>
             <ul className="mt-4 space-y-2.5 text-sm text-white/80">
-              {cats.map((c) => (
-                <li key={c}>{c}</li>
+              {TOPICS.map((t) => (
+                <li key={t.slug}>
+                  <Link href={`/topic/${t.slug}`} className="hover:text-white">
+                    {t.label}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
@@ -123,12 +126,20 @@ function SiteFooter() {
             </h3>
             <ul className="mt-4 space-y-2.5 text-sm text-white/80">
               <li>
-                <Link href="/" className="hover:text-white">
-                  หน้าแรก
+                <Link href="/about" className="hover:text-white">
+                  เกี่ยวกับเรา
                 </Link>
               </li>
-              <li>นโยบายข่าว</li>
-              <li>ติดต่อกองบรรณาธิการ</li>
+              <li>
+                <Link href="/editorial-policy" className="hover:text-white">
+                  นโยบายกองบรรณาธิการ
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white">
+                  ติดต่อเรา
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

@@ -11,6 +11,7 @@ import { BrokerLogo } from "@/components/BrokerLogo";
 import MarketOverview from "@/components/MarketOverview";
 import EconomicCalendar from "@/components/EconomicCalendar";
 import { LiveStream } from "@/components/LiveStream";
+import { LazyMount } from "@/components/LazyMount";
 
 export const revalidate = 60;
 
@@ -131,7 +132,9 @@ export default async function Home() {
         <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
           <SectionHeader dark>ภาพรวมตลาด</SectionHeader>
           <div className="overflow-hidden rounded-xl border border-white/10 bg-[#0f0f0f]">
-            <MarketOverview />
+            <LazyMount minHeight={600}>
+              <MarketOverview />
+            </LazyMount>
           </div>
         </div>
       </section>
@@ -203,7 +206,9 @@ export default async function Home() {
         <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
           <SectionHeader>ปฏิทินเศรษฐกิจ</SectionHeader>
           <div className="overflow-hidden rounded-xl border border-line bg-white">
-            <EconomicCalendar />
+            <LazyMount minHeight={540}>
+              <EconomicCalendar />
+            </LazyMount>
           </div>
         </div>
       </section>

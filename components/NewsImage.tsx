@@ -37,7 +37,24 @@ export function NewsImage({
     }
   }, []);
 
-  if (!src || broken) return null;
+  if (!src || broken) {
+    // รูปหาย/พัง → placeholder แบรนด์ (แทนกล่องว่าง) ให้การ์ดดูสม่ำเสมอ
+    return (
+      <figure className={className}>
+        <div
+          className={`relative flex w-full items-center justify-center overflow-hidden bg-gradient-to-br from-[#15151a] to-[#2a2a33] ${ratioClassName}`}
+          aria-label={alt}
+        >
+          <div className="flex flex-col items-center gap-1 opacity-80">
+            <span className="font-logo text-2xl font-bold text-[#cda33f]">FX</span>
+            <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/40">
+              Forex Thailand
+            </span>
+          </div>
+        </div>
+      </figure>
+    );
+  }
 
   return (
     <figure className={className}>

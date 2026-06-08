@@ -8,19 +8,25 @@ import { type CardArticle } from "@/components/ArticleCard";
 /** ฮีโร่แบบสไลด์ภาพใหญ่ overlay ข้อความ (auto-rotate) สไตล์นิตยสารข่าว */
 export function HeroCarousel({ items }: { items: CardArticle[] }) {
   const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
   const n = items.length;
   const go = useCallback((idx: number) => setI(((idx % n) + n) % n), [n]);
 
   useEffect(() => {
-    if (n <= 1) return;
+    if (n <= 1 || paused) return;
     const t = setInterval(() => setI((p) => (p + 1) % n), 5500);
     return () => clearInterval(t);
-  }, [n]);
+  }, [n, paused]);
 
   if (n === 0) return null;
 
   return (
-    <div className="relative overflow-hidden bg-ink">
+    <div
+      className="relative overflow-hidden bg-ink"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onTouchStart={() => setPaused(true)}
+    >
       <div
         className="flex transition-transform duration-500 ease-out"
         style={{ transform: `translateX(-${i * 100}%)` }}
@@ -29,7 +35,7 @@ export function HeroCarousel({ items }: { items: CardArticle[] }) {
           <Link
             key={a.id}
             href={`/article/${a.id}`}
-            className="group relative block h-[58vh] min-h-[400px] w-full shrink-0 sm:h-[64vh] lg:h-[82vh] lg:max-h-[860px]"
+            className="group relative block h-[50vh] min-h-[330px] w-full shrink-0 sm:h-[62vh] lg:h-[80vh] lg:max-h-[840px]"
           >
             {a.image_url && (
               // eslint-disable-next-line @next/next/no-img-element
