@@ -8,7 +8,7 @@ import { HeroCarousel } from "@/components/HeroCarousel";
 import { NewsSlider } from "@/components/NewsSlider";
 import { PromoCarousel, type PromoSlide } from "@/components/PromoCarousel";
 import { BrokerLogo } from "@/components/BrokerLogo";
-import MarketOverview from "@/components/MarketOverview";
+import AdvancedChart from "@/components/AdvancedChart";
 import EconomicCalendar from "@/components/EconomicCalendar";
 import { LiveStream } from "@/components/LiveStream";
 import { LazyMount } from "@/components/LazyMount";
@@ -130,10 +130,12 @@ export default async function Home() {
       {/* ภาพรวมตลาด (เต็มความกว้าง) — พื้นดำ */}
       <section className="bg-ink">
         <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
-          <SectionHeader dark>ภาพรวมตลาด</SectionHeader>
+          <SectionHeader dark>กราฟราคาตลาด</SectionHeader>
           <div className="overflow-hidden rounded-xl border border-white/10 bg-[#0f0f0f]">
-            <LazyMount minHeight={600}>
-              <MarketOverview />
+            <LazyMount minHeight={560}>
+              <div className="h-[440px] sm:h-[560px]">
+                <AdvancedChart />
+              </div>
             </LazyMount>
           </div>
         </div>
