@@ -1,11 +1,10 @@
-import Link from "next/link";
 import { query, type Article } from "@/lib/db";
-import { categoryLabel, formatThaiDate, truncate } from "@/lib/format";
+import { formatThaiDate, truncate } from "@/lib/format";
 import { PROMOS, getBroker } from "@/lib/brokers";
 import { TOPICS } from "@/lib/topics";
-import { NewsImage } from "@/components/NewsImage";
 import { type CardArticle } from "@/components/ArticleCard";
-import { NewsExplorer } from "@/components/NewsExplorer";
+import { HeroCarousel } from "@/components/HeroCarousel";
+import { NewsSlider } from "@/components/NewsSlider";
 import { PromoCarousel, type PromoSlide } from "@/components/PromoCarousel";
 import TradingViewForex from "@/components/TradingViewForex";
 import EconomicCalendar from "@/components/EconomicCalendar";
@@ -46,14 +45,6 @@ function toCard(a: Article): CardArticle {
   };
 }
 
-function Chip({ category }: { category: string }) {
-  return (
-    <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">
-      {categoryLabel(category)}
-    </span>
-  );
-}
-
 function SectionHeader({
   children,
   dark = false,
@@ -76,58 +67,6 @@ function SectionHeader({
   );
 }
 
-/** ข่าวนำใหญ่ */
-function Hero({ a }: { a: Article }) {
-  return (
-    <Link href={`/article/${a.id}`} className="group block">
-      <NewsImage
-        src={a.image_url}
-        alt={a.title_th}
-        eager
-        ratioClassName="aspect-[16/9]"
-        sizes="(max-width: 1024px) 100vw, 900px"
-        className="mb-4"
-      />
-      <Chip category={a.category} />
-      <h1 className="mt-2 font-display text-2xl font-bold leading-tight tracking-tight text-ink transition-colors group-hover:text-accent sm:text-[2.1rem] lg:text-[2.6rem] lg:leading-[1.12]">
-        {a.title_th}
-      </h1>
-      <p className="mt-3 line-clamp-2 max-w-prose text-[15px] leading-relaxed text-ink-soft lg:text-base">
-        {a.hook?.trim() || a.body_th}
-      </p>
-      <time className="mt-3 block text-[11px] uppercase tracking-wide text-ink-soft">
-        {formatThaiDate(a.created_at)}
-      </time>
-    </Link>
-  );
-}
-
-/** เรื่องเด่นในคอลัมน์ข้าง ๆ ข่าวนำ */
-function Highlight({ a }: { a: Article }) {
-  return (
-    <li className="border-b border-line py-3.5 first:pt-0 last:border-b-0">
-      <Link href={`/article/${a.id}`} className="group flex items-start gap-3">
-        <NewsImage
-          src={a.image_url}
-          alt={a.title_th}
-          ratioClassName="aspect-[4/3]"
-          sizes="92px"
-          className="w-[92px] shrink-0"
-        />
-        <div className="min-w-0">
-          <Chip category={a.category} />
-          <h3 className="mt-0.5 line-clamp-2 font-display text-[14px] font-bold leading-snug text-ink transition-colors group-hover:text-accent">
-            {a.title_th}
-          </h3>
-          <time className="mt-1 block text-[10px] uppercase tracking-wide text-ink-soft">
-            {formatThaiDate(a.created_at)}
-          </time>
-        </div>
-      </Link>
-    </li>
-  );
-}
-
 export default async function Home() {
   const articles = await getArticles();
 
@@ -144,10 +83,11 @@ export default async function Home() {
     );
   }
 
-  const lead = articles.find((a) => a.image_url) ?? articles[0];
-  const others = articles.filter((a) => a.id !== lead.id);
-  const highlights = others.slice(0, 4);
-  const newsCards = others.map(toCard);
+  const heroItems = articles
+    .filter((a) => a.image_url)
+    .slice(0, 6)
+    .map(toCard);
+  const newsItems = articles.map(toCard);
 
   const tabs = TOPICS.map((t) => ({
     slug: t.slug,
@@ -172,35 +112,18 @@ export default async function Home() {
 
   return (
     <>
-      {/* ข่าวเด่น + เรื่องเด่น — พื้นขาว */}
+      {/* ฮีโร่สไลด์ — พื้นขาว */}
       <section className="bg-bg">
-        <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
-          <SectionHeader>ข่าวเด่น</SectionHeader>
-          <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
-            <div className="lg:col-span-8">
-              <Hero a={lead} />
-            </div>
-            {highlights.length > 0 && (
-              <aside className="lg:col-span-4 lg:border-l lg:border-line lg:pl-8">
-                <h3 className="mb-2 font-display text-sm font-bold uppercase tracking-wide text-ink-soft">
-                  เรื่องเด่น
-                </h3>
-                <ul>
-                  {highlights.map((a) => (
-                    <Highlight key={a.id} a={a} />
-                  ))}
-                </ul>
-              </aside>
-            )}
-          </div>
+        <div className="mx-auto max-w-[1440px] px-5 pt-8 md:pt-10 lg:px-8">
+          <HeroCarousel items={heroItems.length > 0 ? heroItems : newsItems.slice(0, 6)} />
         </div>
       </section>
 
-      {/* ข่าวล่าสุด + แท็บหมวด (interactive) — พื้นเทาอ่อน */}
-      <section className="bg-surface">
+      {/* ข่าวล่าสุด (สไลด์แนวนอน + แท็บ) — พื้นเทาอ่อน */}
+      <section className="mt-10 bg-surface md:mt-12">
         <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
           <SectionHeader>ข่าวล่าสุด</SectionHeader>
-          <NewsExplorer articles={newsCards} tabs={tabs} />
+          <NewsSlider articles={newsItems} tabs={tabs} />
         </div>
       </section>
 
