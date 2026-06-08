@@ -86,13 +86,10 @@ export function NewsSlider({
       ) : (
         <div
           ref={scroller}
-          className="flex snap-x gap-5 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="grid snap-x auto-cols-[280px] grid-flow-col grid-rows-2 gap-5 overflow-x-auto pb-2 sm:auto-cols-[320px] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {filtered.map((a) => (
-            <div
-              key={a.id}
-              className="w-[280px] shrink-0 snap-start sm:w-[320px]"
-            >
+            <div key={a.id} className="snap-start">
               <ArticleCard a={a} />
             </div>
           ))}

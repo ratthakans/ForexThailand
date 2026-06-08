@@ -20,7 +20,7 @@ export function HeroCarousel({ items }: { items: CardArticle[] }) {
   if (n === 0) return null;
 
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-ink">
+    <div className="relative overflow-hidden bg-ink">
       <div
         className="flex transition-transform duration-500 ease-out"
         style={{ transform: `translateX(-${i * 100}%)` }}
@@ -29,7 +29,7 @@ export function HeroCarousel({ items }: { items: CardArticle[] }) {
           <Link
             key={a.id}
             href={`/article/${a.id}`}
-            className="group relative block aspect-[16/11] w-full shrink-0 sm:aspect-[16/7] lg:aspect-[21/9]"
+            className="group relative block h-[58vh] min-h-[400px] w-full shrink-0 sm:h-[64vh] lg:h-[82vh] lg:max-h-[860px]"
           >
             {a.image_url && (
               // eslint-disable-next-line @next/next/no-img-element
@@ -43,20 +43,22 @@ export function HeroCarousel({ items }: { items: CardArticle[] }) {
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
               />
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/5" />
-            <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 lg:p-12">
-              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#e6c25a]">
-                {categoryLabel(a.category)}
-              </span>
-              <h2 className="mt-2 max-w-3xl font-display text-2xl font-bold leading-tight text-white drop-shadow-sm sm:text-3xl lg:text-[2.7rem] lg:leading-[1.08]">
-                {a.title_th}
-              </h2>
-              <p className="mt-2 hidden max-w-2xl text-sm leading-relaxed text-white/80 sm:line-clamp-2 sm:block">
-                {a.excerpt}
-              </p>
-              <time className="mt-3 block text-[11px] uppercase tracking-wide text-white/55">
-                {a.dateLabel}
-              </time>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/5" />
+            <div className="absolute inset-x-0 bottom-0">
+              <div className="mx-auto max-w-[1440px] px-5 pb-9 lg:px-8 lg:pb-16">
+                <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#e6c25a]">
+                  {categoryLabel(a.category)}
+                </span>
+                <h2 className="mt-2 max-w-4xl font-display text-2xl font-bold leading-tight text-white drop-shadow-sm sm:text-4xl lg:text-[3.2rem] lg:leading-[1.06]">
+                  {a.title_th}
+                </h2>
+                <p className="mt-3 hidden max-w-2xl text-base leading-relaxed text-white/80 sm:line-clamp-2 sm:block">
+                  {a.excerpt}
+                </p>
+                <time className="mt-3 block text-[11px] uppercase tracking-wide text-white/55">
+                  {a.dateLabel}
+                </time>
+              </div>
             </div>
           </Link>
         ))}

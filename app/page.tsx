@@ -1,12 +1,15 @@
+import Link from "next/link";
 import { query, type Article } from "@/lib/db";
 import { formatThaiDate, truncate } from "@/lib/format";
-import { PROMOS, getBroker } from "@/lib/brokers";
+import { PROMOS, getBroker, BROKERS } from "@/lib/brokers";
 import { TOPICS } from "@/lib/topics";
 import { type CardArticle } from "@/components/ArticleCard";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { NewsSlider } from "@/components/NewsSlider";
 import { PromoCarousel, type PromoSlide } from "@/components/PromoCarousel";
+import { BrokerLogo } from "@/components/BrokerLogo";
 import TradingViewForex from "@/components/TradingViewForex";
+import MarketOverview from "@/components/MarketOverview";
 import EconomicCalendar from "@/components/EconomicCalendar";
 import { LiveStream } from "@/components/LiveStream";
 
@@ -88,6 +91,7 @@ export default async function Home() {
     .slice(0, 6)
     .map(toCard);
   const newsItems = articles.map(toCard);
+  const topBrokers = BROKERS.slice(0, 6);
 
   const tabs = TOPICS.map((t) => ({
     slug: t.slug,
@@ -112,15 +116,11 @@ export default async function Home() {
 
   return (
     <>
-      {/* ฮีโร่สไลด์ — พื้นขาว */}
-      <section className="bg-bg">
-        <div className="mx-auto max-w-[1440px] px-5 pt-8 md:pt-10 lg:px-8">
-          <HeroCarousel items={heroItems.length > 0 ? heroItems : newsItems.slice(0, 6)} />
-        </div>
-      </section>
+      {/* ฮีโร่สไลด์ — เต็มความกว้าง (full-bleed) */}
+      <HeroCarousel items={heroItems.length > 0 ? heroItems : newsItems.slice(0, 6)} />
 
-      {/* ข่าวล่าสุด (สไลด์แนวนอน + แท็บ) — พื้นเทาอ่อน */}
-      <section className="mt-10 bg-surface md:mt-12">
+      {/* ข่าวล่าสุด 2 แถว (เลื่อนแนวนอน) + แท็บ — พื้นเทาอ่อน */}
+      <section className="bg-surface">
         <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
           <SectionHeader>ข่าวล่าสุด</SectionHeader>
           <NewsSlider articles={newsItems} tabs={tabs} />
@@ -145,20 +145,52 @@ export default async function Home() {
               <LiveStream videoId="iEpJwprxDdk" />
             </div>
             <div className="lg:col-span-5">
-              <SectionHeader dark>อัตราแลกเปลี่ยน</SectionHeader>
-              <div className="overflow-hidden rounded-xl border border-white/10 bg-ink p-1">
-                <TradingViewForex />
+              <SectionHeader dark>ภาพรวมตลาด</SectionHeader>
+              <div className="overflow-hidden rounded-xl border border-white/10 bg-[#0f0f0f]">
+                <MarketOverview />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* โปรโมชันโบรกเกอร์ — พื้นขาว */}
+      {/* รีวิวโบรกเกอร์ & โปรโมชัน — พื้นขาว */}
       <section className="bg-bg">
         <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
-          <SectionHeader>โปรโมชันโบรกเกอร์แนะนำ</SectionHeader>
+          <SectionHeader>รีวิวโบรกเกอร์ &amp; โปรโมชัน</SectionHeader>
           <PromoCarousel slides={promoSlides} />
+
+          <div className="mt-8 flex items-center justify-between gap-4">
+            <h3 className="font-display text-base font-bold text-ink">
+              โบรกเกอร์ยอดนิยม
+            </h3>
+            <Link
+              href="/brokers"
+              className="text-sm font-semibold text-accent hover:underline"
+            >
+              ดูรีวิวทั้ง 50 โบรกเกอร์ →
+            </Link>
+          </div>
+          <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            {topBrokers.map((b) => (
+              <Link
+                key={b.slug}
+                href={`/brokers/${b.slug}`}
+                className="group flex flex-col items-center gap-2 rounded-xl border border-line bg-white p-4 text-center transition-all hover:-translate-y-1 hover:border-accent hover:shadow-md"
+              >
+                <BrokerLogo domain={b.domain} name={b.name} size={48} />
+                <span className="font-display text-sm font-bold leading-tight text-ink group-hover:text-accent">
+                  {b.name}
+                </span>
+                <span className="text-[12px] tracking-wide text-accent">
+                  {"★".repeat(b.rating)}
+                  <span className="text-[#d8d4c4]">
+                    {"★".repeat(5 - b.rating)}
+                  </span>
+                </span>
+              </Link>
+            ))}
+          </div>
           <p className="mt-4 text-[11px] text-ink-soft">
             * โปรโมชันและเงื่อนไขอาจเปลี่ยนแปลง โปรดตรวจสอบล่าสุดที่เว็บไซต์โบรกเกอร์ ·
             การเทรดมีความเสี่ยง
@@ -166,12 +198,21 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ปฏิทินเศรษฐกิจ — พื้นเทาอ่อน */}
+      {/* ตลาด & ปฏิทินเศรษฐกิจ — พื้นเทาอ่อน */}
       <section className="bg-surface">
         <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
-          <SectionHeader>ปฏิทินเศรษฐกิจ</SectionHeader>
-          <div className="overflow-hidden rounded-xl border border-line bg-white">
-            <EconomicCalendar />
+          <SectionHeader>ตลาด &amp; ปฏิทินเศรษฐกิจ</SectionHeader>
+          <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-8">
+              <div className="overflow-hidden rounded-xl border border-line bg-white">
+                <EconomicCalendar />
+              </div>
+            </div>
+            <div className="lg:col-span-4">
+              <div className="overflow-hidden rounded-xl border border-line bg-ink p-1">
+                <TradingViewForex />
+              </div>
+            </div>
           </div>
         </div>
       </section>
