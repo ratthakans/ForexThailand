@@ -142,29 +142,34 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ถ่ายทอดสด — วิดีโอเป็นพื้นหลังเต็มจอ (autoplay มิวต์) */}
-      <section className="relative h-[58vh] min-h-[420px] overflow-hidden bg-ink">
-        <LiveBackground videoId="iEpJwprxDdk" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/40" />
-        <div className="relative mx-auto flex h-full max-w-[1440px] flex-col justify-end px-5 pb-10 lg:px-8 lg:pb-14">
-          <span className="flex w-fit items-center gap-1.5 rounded bg-breaking px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
-            LIVE
-          </span>
-          <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white drop-shadow-sm sm:text-4xl">
-            ถ่ายทอดสดตลาดการเงิน
-          </h2>
-          <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/75">
-            ติดตามความเคลื่อนไหวตลาดแบบเรียลไทม์ตลอดทั้งวัน
-          </p>
-          <a
-            href={`https://www.youtube.com/watch?v=iEpJwprxDdk`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-gold mt-5 inline-flex w-fit items-center gap-1.5 rounded-lg px-5 py-2.5 text-sm font-bold text-black transition-transform hover:translate-x-1"
-          >
-            ดูแบบเต็มจอ / เปิดเสียง ↗
-          </a>
+      {/* ถ่ายทอดสด — วิดีโอเป็นพื้นหลัง (autoplay มิวต์) ในกรอบ ไม่เต็มจอ */}
+      <section className="bg-ink">
+        <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
+          <SectionHeader dark>ถ่ายทอดสดตลาดการเงิน</SectionHeader>
+          <div className="relative h-[280px] overflow-hidden rounded-xl border border-white/10 bg-[#0f0f0f] sm:h-[380px] lg:h-[460px]">
+            <LiveBackground videoId="iEpJwprxDdk" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/30" />
+            <div className="relative flex h-full flex-col justify-end p-5 sm:p-8">
+              <span className="flex w-fit items-center gap-1.5 rounded bg-breaking px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+                LIVE
+              </span>
+              <h3 className="mt-3 font-display text-2xl font-bold leading-tight text-white drop-shadow-sm sm:text-3xl">
+                ติดตามตลาดแบบเรียลไทม์
+              </h3>
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/75">
+                ความเคลื่อนไหวตลาดการเงินตลอดทั้งวัน
+              </p>
+              <a
+                href={`https://www.youtube.com/watch?v=iEpJwprxDdk`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gold mt-5 inline-flex w-fit items-center gap-1.5 rounded-lg px-5 py-2.5 text-sm font-bold text-black transition-transform hover:translate-x-1"
+              >
+                ดูแบบเต็มจอ / เปิดเสียง ↗
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
