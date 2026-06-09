@@ -41,11 +41,16 @@ export function toParagraphs(body: string): string[] {
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
+  insight: "บทวิเคราะห์",
   breaking: "ข่าวด่วน",
+  news_update: "อัปเดต",
+  politics: "ต่างประเทศ",
+  general: "ข่าวทั่วไป",
+  review: "รีวิว",
+  rumor: "ข่าวลือ",
   image: "ภาพข่าว",
-  general: "ทั่วไป",
 };
 
 export function categoryLabel(category: string): string {
-  return CATEGORY_LABELS[category] ?? "ทั่วไป";
+  return CATEGORY_LABELS[category] ?? "ข่าวทั่วไป";
 }

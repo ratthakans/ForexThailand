@@ -45,6 +45,7 @@ function toCard(a: Article): CardArticle {
     image_url: a.image_url,
     category: a.category,
     dateLabel: formatThaiDate(a.created_at),
+    author: a.author,
   };
 }
 

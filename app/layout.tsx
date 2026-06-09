@@ -47,6 +47,7 @@ export const metadata: Metadata = {
 
 const NAV: NavItem[] = [
   { label: "หน้าแรก", href: "/" },
+  { label: "บทวิเคราะห์", href: "/insight" },
   ...TOPICS.slice(0, 4).map((t) => ({
     label: t.label,
     href: `/topic/${t.slug}`,
@@ -111,6 +112,11 @@ function SiteFooter() {
               หมวดข่าว
             </h3>
             <ul className="mt-4 space-y-2.5 text-sm text-white/80">
+              <li>
+                <Link href="/insight" className="hover:text-white">
+                  บทวิเคราะห์
+                </Link>
+              </li>
               {TOPICS.map((t) => (
                 <li key={t.slug}>
                   <Link href={`/topic/${t.slug}`} className="hover:text-white">

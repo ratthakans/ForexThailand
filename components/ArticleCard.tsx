@@ -9,6 +9,7 @@ export type CardArticle = {
   image_url: string | null;
   category: string;
   dateLabel: string;
+  author?: string | null;
 };
 
 /** การ์ดข่าวมาตรฐาน (ใช้ทั้งหน้าแรก/หน้าหมวด) — ไม่มี hook จึงใช้ได้ทั้ง server/client */
@@ -32,8 +33,8 @@ export function ArticleCard({ a }: { a: CardArticle }) {
           <p className="mt-1.5 line-clamp-2 flex-1 text-[13px] leading-relaxed text-ink-soft">
             {a.excerpt}
           </p>
-          <time className="mt-3 block text-[11px] uppercase tracking-wide text-ink-soft">
-            {a.dateLabel}
+          <time className="mt-3 block text-[11px] tracking-wide text-ink-soft">
+            {a.author?.trim() ? `โดย ${a.author.trim()} · ${a.dateLabel}` : a.dateLabel}
           </time>
         </div>
       </Link>

@@ -163,21 +163,26 @@ export default async function ArticlePage({ params }: PageProps) {
         <h1 className="mt-2 font-display text-3xl font-bold leading-tight tracking-tight text-ink sm:text-[2.4rem] sm:leading-[1.15]">
           {article.title_th}
         </h1>
-        <time className="mt-4 block border-b border-line pb-5 text-xs uppercase tracking-wide text-ink-soft">
-          {formatThaiDateTime(article.created_at)}
-        </time>
+        <div className="mt-4 flex flex-wrap items-baseline gap-x-2 gap-y-1 border-b border-line pb-5 text-xs text-ink-soft">
+          {article.author?.trim() && (
+            <span className="font-semibold text-ink">โดย {article.author.trim()}</span>
+          )}
+          <time>{formatThaiDateTime(article.created_at)}</time>
+        </div>
       </header>
 
-      {/* รูปประกอบ + เครดิต — ถ้ารูปพัง/ไม่มี จะไม่แสดงทั้งบล็อก */}
-      <NewsImage
-        src={article.image_url}
-        alt={article.title_th}
-        eager
-        credit={article.image_credit}
-        ratioClassName="aspect-[16/9]"
-        sizes="(max-width: 768px) 100vw, 768px"
-        className="mt-6"
-      />
+      {/* รูปประกอบ + เครดิต — news_update ไม่มีรูป จึงไม่เรนเดอร์กรอบเปล่า */}
+      {article.image_url && (
+        <NewsImage
+          src={article.image_url}
+          alt={article.title_th}
+          eager
+          credit={article.image_credit}
+          ratioClassName="aspect-[16/9]"
+          sizes="(max-width: 768px) 100vw, 768px"
+          className="mt-6"
+        />
+      )}
 
       {/* เนื้อหา */}
       <div className="mt-8 space-y-5 text-[18px] leading-[1.95] text-ink">
