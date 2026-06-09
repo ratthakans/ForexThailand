@@ -10,7 +10,7 @@ import { PromoCarousel, type PromoSlide } from "@/components/PromoCarousel";
 import { BrokerLogo } from "@/components/BrokerLogo";
 import AdvancedChart from "@/components/AdvancedChart";
 import EconomicCalendar from "@/components/EconomicCalendar";
-import { LiveStream } from "@/components/LiveStream";
+import { LiveBackground } from "@/components/LiveBackground";
 import { LazyMount } from "@/components/LazyMount";
 
 export const revalidate = 60;
@@ -141,23 +141,29 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ถ่ายทอดสด (เต็มความกว้าง) — พื้นขาว */}
-      <section className="bg-bg">
-        <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
-          <div className="mb-6 flex items-center gap-3">
-            <span className="flex items-center gap-1.5 rounded bg-breaking px-2 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
-              LIVE
-            </span>
-            <h2 className="font-display text-lg font-bold tracking-tight text-ink">
-              ถ่ายทอดสด
-            </h2>
-            <span className="h-px flex-1 bg-line" />
-          </div>
-          <LiveStream videoId="iEpJwprxDdk" />
-          <p className="mt-3 text-center text-xs text-ink-soft">
-            ติดตามความเคลื่อนไหวตลาดแบบเรียลไทม์
+      {/* ถ่ายทอดสด — วิดีโอเป็นพื้นหลังเต็มจอ (autoplay มิวต์) */}
+      <section className="relative h-[58vh] min-h-[420px] overflow-hidden bg-ink">
+        <LiveBackground videoId="iEpJwprxDdk" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/40" />
+        <div className="relative mx-auto flex h-full max-w-[1440px] flex-col justify-end px-5 pb-10 lg:px-8 lg:pb-14">
+          <span className="flex w-fit items-center gap-1.5 rounded bg-breaking px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+            LIVE
+          </span>
+          <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white drop-shadow-sm sm:text-4xl">
+            ถ่ายทอดสดตลาดการเงิน
+          </h2>
+          <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/75">
+            ติดตามความเคลื่อนไหวตลาดแบบเรียลไทม์ตลอดทั้งวัน
           </p>
+          <a
+            href={`https://www.youtube.com/watch?v=iEpJwprxDdk`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gold mt-5 inline-flex w-fit items-center gap-1.5 rounded-lg px-5 py-2.5 text-sm font-bold text-black transition-transform hover:translate-x-1"
+          >
+            ดูแบบเต็มจอ / เปิดเสียง ↗
+          </a>
         </div>
       </section>
 
@@ -165,41 +171,60 @@ export default async function Home() {
       <section className="bg-ink">
         <div className="mx-auto max-w-[1440px] px-5 py-10 md:py-14 lg:px-8">
           <SectionHeader dark>รีวิวโบรกเกอร์ &amp; โปรโมชัน</SectionHeader>
-          <PromoCarousel slides={promoSlides} />
+          <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+            {/* ซ้าย: โปรโมชัน */}
+            <div className="lg:col-span-7">
+              <PromoCarousel slides={promoSlides} />
+              <p className="mt-4 text-[11px] text-white/40">
+                * โปรโมชันและเงื่อนไขอาจเปลี่ยนแปลง โปรดตรวจสอบล่าสุดที่เว็บไซต์
+                โบรกเกอร์ · การเทรดมีความเสี่ยง
+              </p>
+            </div>
 
-          <div className="mt-8 flex items-center justify-between gap-4">
-            <h3 className="font-display text-base font-bold text-white">
-              โบรกเกอร์ยอดนิยม
-            </h3>
-            <Link
-              href="/brokers"
-              className="text-sm font-semibold text-accent hover:underline"
-            >
-              ดูรีวิวทั้ง 50 โบรกเกอร์ →
-            </Link>
+            {/* ขวา: รีวิวโบรกเกอร์ยอดนิยม */}
+            <div className="lg:col-span-5">
+              <div className="flex items-center justify-between gap-3">
+                <h3 className="font-display text-base font-bold text-white">
+                  โบรกเกอร์ยอดนิยม
+                </h3>
+                <Link
+                  href="/brokers"
+                  className="text-sm font-semibold text-accent hover:underline"
+                >
+                  ดูทั้ง 50 →
+                </Link>
+              </div>
+              <ul className="mt-4 divide-y divide-white/10 rounded-xl border border-white/10 bg-white/[0.04]">
+                {topBrokers.map((b) => (
+                  <li key={b.slug}>
+                    <Link
+                      href={`/brokers/${b.slug}`}
+                      className="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-white/[0.06]"
+                    >
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 font-display text-[12px] font-bold text-white">
+                        {b.rank}
+                      </span>
+                      <BrokerLogo domain={b.domain} name={b.name} size={36} />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate font-display text-sm font-bold text-white group-hover:text-accent">
+                          {b.name}
+                        </span>
+                        <span className="text-[12px] tracking-wide text-accent">
+                          {"★".repeat(b.rating)}
+                          <span className="text-white/20">
+                            {"★".repeat(5 - b.rating)}
+                          </span>
+                        </span>
+                      </span>
+                      <span className="shrink-0 text-white/30 transition-colors group-hover:text-accent">
+                        →
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-            {topBrokers.map((b) => (
-              <Link
-                key={b.slug}
-                href={`/brokers/${b.slug}`}
-                className="group flex flex-col items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] p-4 text-center transition-all hover:-translate-y-1 hover:border-accent hover:bg-white/[0.07]"
-              >
-                <BrokerLogo domain={b.domain} name={b.name} size={48} />
-                <span className="font-display text-sm font-bold leading-tight text-white">
-                  {b.name}
-                </span>
-                <span className="text-[12px] tracking-wide text-accent">
-                  {"★".repeat(b.rating)}
-                  <span className="text-white/20">{"★".repeat(5 - b.rating)}</span>
-                </span>
-              </Link>
-            ))}
-          </div>
-          <p className="mt-4 text-[11px] text-white/40">
-            * โปรโมชันและเงื่อนไขอาจเปลี่ยนแปลง โปรดตรวจสอบล่าสุดที่เว็บไซต์โบรกเกอร์ ·
-            การเทรดมีความเสี่ยง
-          </p>
         </div>
       </section>
 

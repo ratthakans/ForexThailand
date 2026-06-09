@@ -140,6 +140,11 @@ function SiteFooter() {
                   ติดต่อเรา
                 </Link>
               </li>
+              <li>
+                <Link href="/partner" className="hover:text-white">
+                  ร่วมเป็นพาร์ทเนอร์
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
